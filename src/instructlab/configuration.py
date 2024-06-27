@@ -161,10 +161,10 @@ class _serve(BaseModel):
     model_config = ConfigDict(extra="ignore", protected_namespaces=())
 
     # vllm configuration
-    vllm_config: _serve_vllm
+    vllm: _serve_vllm
 
     # llama-cpp configuration
-    llama_cpp_config: _serve_llama_cpp
+    llama_cpp: _serve_llama_cpp
 
     # required fields
     model_path: StrictStr
@@ -212,12 +212,12 @@ def get_default_config():
         ),
         serve=_serve(
             model_path=DEFAULT_MODEL_PATH,
-            llama_cpp_config=_serve_llama_cpp(
+            llama_cpp=_serve_llama_cpp(
                 gpu_layers=-1,
                 max_ctx_size=4096,
                 model_family=None,
             ),
-            vllm_config=_serve_vllm(
+            vllm=_serve_vllm(
                 vllm_args="",
             ),
         ),
