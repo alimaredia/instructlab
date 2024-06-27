@@ -99,6 +99,12 @@ def serve(
 
     backend_instance = None
     if backend == backends.LLAMA_CPP:
+        if gpu_layers == None:
+            gpu_layers = ctx.obj.config.serve.llama_cpp.gpu_layers
+
+        if max_ctx_size == None:
+            max_ctx_size = ctx.obj.config.serve.llama_cpp.max_ctx_size
+
         # Instantiate the llama server
         backend_instance = llama_cpp.Server(
             logger=logger,
