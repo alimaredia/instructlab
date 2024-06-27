@@ -146,6 +146,8 @@ class _serve_llama_cpp(BaseModel):
     """Class describing configuration of llama-cpp serving backend."""
     gpu_layers: int = -1
     max_ctx_size: PositiveInt = 4096
+    # TODO rename this. It can't be model_family
+    llm_model_family: str = ""
 
 class _serve(BaseModel):
     """Class describing configuration of the serve sub-command."""
@@ -165,7 +167,6 @@ class _serve(BaseModel):
     # additional fields with defaults
     host_port: StrictStr = "127.0.0.1:8000"
     backend: str = ""  # we don't set a default value here since it's auto-detected
-    model_family: str = None # if model family is not passed as a flag for chat or data gen it's value is None, setting None as a default keeps this consistent
 
     def api_base(self):
         """Returns server API URL, based on the configured host and port"""
@@ -208,6 +209,7 @@ def get_default_config():
             llama_cpp_config=_serve_llama_cpp(
                 gpu_layers=-1,
                 max_ctx_size=4096,
+                model_family=None,
             ),
             vllm_config=_serve_vllm(
                 vllm_args="",

@@ -24,6 +24,7 @@ from .backends import (
     get_uvicorn_config,
     is_temp_server_running,
     templates,
+    LLAMA_CPP,
 )
 
 
@@ -93,9 +94,9 @@ class Server(BackendServer):
         self, tls_insecure, tls_client_cert, tls_client_key, tls_client_passwd
     ):
         try:
-            server_process, api_base = ensure_server(
+            llama_cpp_server_process, _, api_base = ensure_server(
                 logger=self.logger,
-                server_process_func=self.create_server_process,
+                backend=LLAMA_CPP,
                 api_base=self.api_base,
                 tls_insecure=tls_insecure,
                 tls_client_cert=tls_client_cert,
@@ -104,8 +105,9 @@ class Server(BackendServer):
                 host=self.host,
                 port=self.port,
                 queue=self.queue,
+                server_process_func=self.create_server_process,
             )
-            self.process = server_process
+            self.process = llama_cpp_server_process
             self.api_base = api_base
         except ServerException as exc:
             raise exc
