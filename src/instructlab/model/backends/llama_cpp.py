@@ -17,6 +17,7 @@ import llama_cpp.server.app as llama_app
 from ...configuration import get_model_family
 from .backends import (
     API_ROOT_WELCOME_MESSAGE,
+    LLAMA_CPP,
     BackendServer,
     ServerException,
     UvicornServer,
@@ -24,7 +25,6 @@ from .backends import (
     get_uvicorn_config,
     is_temp_server_running,
     templates,
-    LLAMA_CPP,
 )
 
 

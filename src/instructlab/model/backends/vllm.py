@@ -8,11 +8,7 @@ import subprocess
 import sys
 
 # Local
-from .backends import (
-    BackendServer,
-    ensure_server,
-    VLLM,
-)
+from .backends import VLLM, BackendServer, ensure_server
 
 
 class Server(BackendServer):
@@ -32,7 +28,14 @@ class Server(BackendServer):
         self.process = None
 
     def run(self):
-        self.process = run_vllm(self.logger, self.host, self.port, self.model_path, self.vllm_args, background=False)
+        self.process = run_vllm(
+            self.logger,
+            self.host,
+            self.port,
+            self.model_path,
+            self.vllm_args,
+            background=False,
+        )
 
         try:
             while True:
@@ -40,12 +43,19 @@ class Server(BackendServer):
         except KeyboardInterrupt:
             self.logger.info(f"VLLM server terminated by keyboard")
             self.shutdown()
-        #TODO is this second shutdown really needed?
+        # TODO is this second shutdown really needed?
         finally:
             self.shutdown()
 
     def create_server_process(self, port: str) -> subprocess.Popen:
-        server_process = run_vllm(self.logger, self.host, port, self.model_path, self.vllm_args, background=True)
+        server_process = run_vllm(
+            self.logger,
+            self.host,
+            port,
+            self.model_path,
+            self.vllm_args,
+            background=True,
+        )
         return server_process
 
     def run_detached(
@@ -76,7 +86,14 @@ class Server(BackendServer):
             self.process.terminate()
 
 
-def run_vllm(logger: logging.Logger, host: str, port: str, model_path: pathlib.Path, vllm_args: str, background: bool) -> subprocess.Popen:
+def run_vllm(
+    logger: logging.Logger,
+    host: str,
+    port: str,
+    model_path: pathlib.Path,
+    vllm_args: str,
+    background: bool,
+) -> subprocess.Popen:
     vllm_process = None
     vllm_cmd = [sys.executable, "-m", "vllm.entrypoints.openai.api_server"]
 
@@ -94,11 +111,15 @@ def run_vllm(logger: logging.Logger, host: str, port: str, model_path: pathlib.P
     logger.debug(f"vllm serving command is: {vllm_cmd}")
     try:
         if background:
-            vllm_process = subprocess.Popen(args=vllm_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            vllm_process = subprocess.Popen(
+                args=vllm_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
         else:
             vllm_process = subprocess.Popen(args=vllm_cmd)
-    #TODO: Look further into error/exception handling here
+    # TODO: Look further into error/exception handling here
     except subprocess.CalledProcessError as err:
-        raise ServerException(f"Vllm did not start properly. Exited with return code: {err.returncode}")
+        raise ServerException(
+            f"Vllm did not start properly. Exited with return code: {err.returncode}"
+        )
 
     return vllm_process
