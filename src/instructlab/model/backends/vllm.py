@@ -55,11 +55,11 @@ class Server(BackendServer):
                 time.sleep(1)
         except KeyboardInterrupt:
             self.shutdown()
-            self.logger.info("vLLM server terminated by keyboard")
+            logger.info("vLLM server terminated by keyboard")
         # pylint: disable=broad-exception-caught
         except BaseException:
             self.shutdown()
-            self.logger.exception("vLLM server terminated")
+            logger.exception("vLLM server terminated")
 
     def create_server_process(self, port: int) -> subprocess.Popen:
         server_process = run_vllm(

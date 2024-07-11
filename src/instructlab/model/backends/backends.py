@@ -205,7 +205,7 @@ def shutdown_process(process: subprocess.Popen, timeout: int) -> None:
     """
     Shuts down a process
 
-    Sends SIGTERM and then after a timeout if the process still is not terminated sends a SIGKILL
+    Sends SIGINT and then after a timeout if the process still is not terminated sends a SIGKILL
 
     Args:
         process (subprocess.Popen): process of the vllm server
@@ -213,11 +213,11 @@ def shutdown_process(process: subprocess.Popen, timeout: int) -> None:
     Returns:
         Nothing
     """
-    process.terminate()
+    os.kill(process.pid, signal.SIGINT)
     try:
         process.wait(timeout)
     except subprocess.TimeoutExpired:
-        process.kill()
+        os.kill(process.pid, signal.SIGKILL)
 
 
 def ensure_server(
