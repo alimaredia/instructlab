@@ -14,6 +14,7 @@ import socket
 import struct
 import subprocess
 import sys
+import psutil
 
 # Third Party
 from uvicorn import Config
@@ -200,6 +201,47 @@ def get(model_path: pathlib.Path, backend: str | None) -> str:
 
     return backend
 
+def log_vllm_child_proc_term(proc: psutil.Process):
+    """
+    Callback for psutil.wait_procs that logs termination of vLLM child process
+
+    Args:
+        proc (psutil.Process): vLLM child process
+
+    Returns:
+        Nothing
+    """
+    logger.debug("vLLM pt_maint_thread process {} terminated".format(proc))
+
+def shutdown_vllm_children(pid: int, timeout: int) -> None:
+    """
+    Shuts down child processes
+
+    Gets children processes from a parent and then sends SIGTERM to the child pt_main_thread processes. 
+    After timeout number of seconds if the child processes still is not terminated sends a SIGKILL
+
+    Args:
+        pid     (int):              PID of parent process
+        timeout (int):              How long to wait until SIGKILL is sent to a child process
+
+    Returns:
+        Nothing
+    """
+    parent = psutil.Process(pid)
+    children = parent.children(recursive=True)
+    pt_mt_children = []
+
+    for process in children:
+        if process.name() == "pt_main_thread":
+            pt_mt_children.append(process)
+            try:
+                process.send_signal(signal.SIGTERM)
+            except psutil.NoSuchProcess:
+                pass
+
+    gone, alive = psutil.wait_procs(pt_mt_children, timeout=timeout, callback=log_vllm_child_proc_term)
+    for process in alive:
+        process.kill()
 
 def shutdown_process(process: subprocess.Popen, timeout: int) -> None:
     """
@@ -208,11 +250,15 @@ def shutdown_process(process: subprocess.Popen, timeout: int) -> None:
     Sends SIGTERM and then after a timeout if the process still is not terminated sends a SIGKILL
 
     Args:
-        process (subprocess.Popen): process of the vllm server
+        process (subprocess.Popen): process of the vllm server process. If vLLM is run with
+                                    --tensor-parallel-size N, where N > 1, N -1 child processes
+                                    will get created.
+        timeout (int):              How long to wait until SIGKILL is sent to a process
 
     Returns:
         Nothing
     """
+    shutdown_vllm_children(process.pid, timeout)
     process.terminate()
     try:
         process.wait(timeout)
