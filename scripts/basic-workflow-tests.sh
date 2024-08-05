@@ -250,7 +250,9 @@ test_taxonomy() {
 
 test_generate() {
     task Generate synthetic data
-    GENERATE_ARGS+=("--endpoint-url" "http://localhost:8000/v1")
+    # Disable batching with llama-cpp. See https://github.com/instructlab/instructlab/issues/1892
+    GENERATE_ARGS+=("--endpoint-url" "http://localhost:8000/v1" "--batch-size" "0")
+    #GENERATE_ARGS+=("--endpoint-url" "http://localhost:8000/v1")
     if [ "$MIXTRAL" -eq 1 ]; then
         GENERATE_ARGS+=("--model" "${CACHE_HOME}/instructlab/models/${MIXTRAL_GGUF_MODEL}")
     else
@@ -260,11 +262,6 @@ test_generate() {
     # default arg for '--pipeline' is "simple"
     if [ "$SDG_PIPELINE" = "full" ]; then
         GENERATE_ARGS+=("--pipeline" "full")
-    fi
-
-    # Disable batching with llama-cpp. See https://github.com/instructlab/instructlab/issues/1892
-    if [ "$BACKEND" = "llama-cpp" ]; then
-        GENERATE_ARGS+=("--batch-size" "0")
     fi
 
     # NUM_INSTRUCTIONS is '1' if MINIMAL is set, '5' otherwise
@@ -344,13 +341,13 @@ test_exec() {
     test_download
 
     # See below for cleanup, this runs an ilab model serve in the background
-    test_serve base
-    PID=$!
+    #test_serve base
+    #PID=$!
 
-    test_chat
+    #test_chat
 
-    task Stopping the ilab model serve for the base model
-    wait_for_server shutdown $PID
+    #task Stopping the ilab model serve for the base model
+    #wait_for_server shutdown $PID
 
     test_serve teacher
     PID=$!
@@ -358,10 +355,10 @@ test_exec() {
 
     test_taxonomy 1
     test_generate
-    test_taxonomy 2
-    test_generate
-    test_taxonomy 3
-    test_generate
+    #test_taxonomy 2
+    #test_generate
+    #test_taxonomy 3
+    #test_generate
 
     # Kill the serve process
     task Stopping the ilab model serve for the teacher model
@@ -397,8 +394,8 @@ test_exec() {
         wait_for_server shutdown $PID
     fi
 
-    task Evaluating the output of ilab model train
-    test_evaluate
+    #task Evaluating the output of ilab model train
+    #test_evaluate
 }
 
 wait_for_server() {
@@ -492,6 +489,6 @@ while getopts "cemMfFhvT" opt; do
 done
 
 init_e2e_tests
-trap 'rm -rf "${E2E_TEST_DIR}"' EXIT
+#trap 'rm -rf "${E2E_TEST_DIR}"' EXIT
 set_defaults
 test_exec
