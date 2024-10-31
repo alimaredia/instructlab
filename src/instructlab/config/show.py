@@ -20,8 +20,9 @@ yaml.indent(mapping=2, sequence=4, offset=2)
 def show(ctx: click.Context) -> None:
     """Displays the current config as YAML"""
     # TODO: make this use pretty colors like jq/yq
+    ctx.config = ctx.parent.config
     try:
-        commented_map = configuration.config_to_commented_map(ctx.obj.config)
+        commented_map = configuration.config_to_commented_map(ctx.config)
     except YAMLError as e:
         click.secho(f"Error loading config as YAML: {e}", fg="red")
         ctx.exit(2)

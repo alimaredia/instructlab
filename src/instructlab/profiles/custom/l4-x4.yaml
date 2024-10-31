@@ -1,0 +1,3 @@
+serve:
+  vllm:
+    gpus: 4

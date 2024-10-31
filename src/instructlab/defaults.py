@@ -125,6 +125,9 @@ class _InstructlabDefaults:
     def DEFAULT_CHAT_MODEL(self) -> str:
         return path.join(self.MODELS_DIR, self.GGUF_MODEL_NAME)
 
+    def CUSTOM_MODEL_PATH(self, model_name) -> str:
+        return path.join(self.MODELS_DIR, model_name)
+
     @property
     def DEFAULT_TEACHER_MODEL(self) -> str:
         return path.join(self.MODELS_DIR, self.MISTRAL_GGUF_MODEL_NAME)
