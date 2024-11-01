@@ -1,0 +1,116 @@
+chat:
+  context: default
+  greedy_mode: false
+  logs_dir: /home/ali/.local/share/instructlab/chatlogs
+  max_tokens:
+  model: /home/ali/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf
+  session:
+  vi_mode: false
+  visible_overflow: true
+evaluate:
+  base_branch:
+  base_model: instructlab/granite-7b-lab
+  branch:
+  gpus:
+  mmlu:
+    batch_size: auto
+    few_shots: 5
+  mmlu_branch:
+    tasks_dir: /home/ali/.local/share/instructlab/datasets
+  model: /home/ali/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf
+  mt_bench:
+    judge_model: prometheus-eval/prometheus-8x7b-v2.0
+    max_workers: auto
+    output_dir: /home/ali/.local/share/instructlab/internal/eval_data
+  mt_bench_branch:
+    taxonomy_path: /home/ali/.local/share/instructlab/taxonomy
+general:
+  debug_level: 0
+  log_format: '%(levelname)s %(asctime)s %(name)s:%(lineno)d: %(message)s'
+  log_level: INFO
+generate:
+  chunk_word_count: 1000
+  model: /home/ali/.cache/instructlab/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+  num_cpus: 10
+  num_instructions: -1
+  output_dir: /home/ali/.local/share/instructlab/datasets
+  pipeline: full
+  sdg_scale_factor: 30
+  seed_file: /home/ali/.local/share/instructlab/internal/seed_tasks.json
+  taxonomy_base: origin/main
+  taxonomy_path: /home/ali/.local/share/instructlab/taxonomy
+  teacher:
+    backend:
+    chat_template:
+    host_port: 127.0.0.1:8000
+    llama_cpp:
+      gpu_layers: -1
+      llm_family: ''
+      max_ctx_size: 4096
+    model_path: /home/ali/.cache/instructlab/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+    vllm:
+      gpus:
+      llm_family: ''
+      max_startup_attempts: 120
+      vllm_args: []
+serve:
+  backend:
+  chat_template:
+  host_port: 127.0.0.1:8000
+  llama_cpp:
+    gpu_layers: -1
+    llm_family: ''
+    max_ctx_size: 4096
+  model_path: /home/ali/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf
+  vllm:
+    gpus:
+    llm_family: ''
+    max_startup_attempts: 120
+    vllm_args: []
+train:
+  additional_args: {}
+  checkpoint_at_epoch: true
+  ckpt_output_dir: /home/ali/.local/share/instructlab/checkpoints
+  data_output_dir: /home/ali/.local/share/instructlab/internal
+  data_path: /home/ali/.local/share/instructlab/datasets
+  deepspeed_cpu_offload_optimizer: false
+  device: cpu
+  disable_flash_attn: false
+  distributed_backend: deepspeed
+  effective_batch_size: 64
+  fsdp_cpu_offload_optimizer: false
+  is_padding_free: false
+  lora_quantize_dtype: nf4
+  lora_rank: 0
+  max_batch_len: 5000
+  max_seq_len: 4096
+  model_path: instructlab/granite-7b-lab
+  nproc_per_node: 1
+  num_epochs: 10
+  phased_base_dir: /home/ali/.local/share/instructlab/phased
+  phased_mt_bench_judge: /home/ali/.cache/instructlab/models/prometheus-eval/prometheus-8x7b-v2.0
+  phased_phase1_effective_batch_size: 128
+  phased_phase1_num_epochs: 7
+  phased_phase1_samples_per_save: 0
+  phased_phase2_effective_batch_size: 3840
+  phased_phase2_num_epochs: 10
+  pipeline: full
+  save_samples: 250000
+  training_journal:
+  deepspeed_cpu_offload_optimizer_pin_memory: false
+  deepspeed_cpu_offload_optimizer_ratio: 1
+  learning_rate: 2.0e-05
+  lora_alpha: 32
+  lora_dropout: 0.1
+  lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  nnodes: 1
+  node_rank: 0
+  random_seed: 42
+  rdzv_endpoint: 127.0.0.1:12222
+  rdzv_id: 123
+  warmup_steps: 25
+version: 1.0.0

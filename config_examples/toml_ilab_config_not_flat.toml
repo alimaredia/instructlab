@@ -1,0 +1,24 @@
+[model.chat]
+context = "default"
+greedy_mode = false
+logs_dir = "/home/ali/.local/share/instructlab/chatlogs"
+model = "/home/ali/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf"
+vi_mode = false
+visible_overflow = true
+
+[model.serve]
+backend = "vllm"
+chat_template = "auto"
+host_port = "127.0.0.1:8000"
+model_path = "/home/ali/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf"
+
+[model.serve.llama_cpp]
+gpu_layers = -1
+llm_family = ''
+max_ctx_size = 4096
+
+[model.serve.vllm]
+gpus = 0
+llm_family = ''
+max_startup_attempts = 120
+vllm_args = []
