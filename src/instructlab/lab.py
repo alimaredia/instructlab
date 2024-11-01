@@ -14,12 +14,41 @@ from deepmerge import always_merger
 # First Party
 from instructlab import clickext
 from instructlab import configuration as cfg
-from .profiles.temp_default_profile import DefaultConfig
+from .profiles.default_profile import DefaultConfig
+
+from .defaults import (
+    DEFAULTS,
+)
 
 # 'fork' is unsafe and incompatible with some hardware accelerators.
 # Python 3.14 will switch to 'spawn' on all platforms.
 multiprocessing.set_start_method(cfg.DEFAULTS.MULTIPROCESSING_START_METHOD, force=True)
 
+def ensure_storage_directories_exist() -> None:
+    """
+    Ensures that the default directories used by ilab exist.
+    """
+    dirs_to_make = [
+        DEFAULTS._cache_home,
+        DEFAULTS._config_dir,
+        DEFAULTS._data_dir,
+        DEFAULTS.CHATLOGS_DIR,
+        DEFAULTS.CHECKPOINTS_DIR,
+        DEFAULTS.OCI_DIR,
+        DEFAULTS.DATASETS_DIR,
+        DEFAULTS.EVAL_DATA_DIR,
+        DEFAULTS.INTERNAL_DIR,
+        DEFAULTS.MODELS_DIR,
+        DEFAULTS.TAXONOMY_DIR,
+        DEFAULTS.TRAIN_CONFIG_DIR,
+        DEFAULTS.TRAIN_PROFILE_DIR,
+        DEFAULTS.TRAIN_ADDITIONAL_OPTIONS_DIR,
+        DEFAULTS.PHASED_DIR,
+    ]
+
+    for dirpath in dirs_to_make:
+        if not os.path.exists(dirpath):
+            os.makedirs(dirpath, exist_ok=True)
 
 @click.group(
     cls=clickext.ExpandAliasesGroup,
@@ -62,6 +91,7 @@ def ilab(ctx, config_file, debug_level: int = 0):
     # what I want is the default config to be continuously overriden instead of the autodetection just picking up the right profile at the end of the day
     # but why?
         # because the overriding code would be easier when the config file is provided if the others were doing that too?
+    ensure_storage_directories_exist()
     config = DefaultConfig()
 
     autodetected_profiles_dir = os.path.join(os.path.dirname(__file__), "profiles/autodetected")
@@ -93,6 +123,21 @@ def ilab(ctx, config_file, debug_level: int = 0):
     else:
         print("skipping application of custom profiles")
 
-    ctx.config = config
+    if os.path.isfile(DEFAULTS.CONFIG_FILE):
+        # TODO: try block here
+        file_path = os.path.join(os.environ.get("HOME"), ".config/instructlab/config.yaml")
+        print(file_path)
+        with open(file_path, "r") as file:
+            yaml_data = yaml.safe_load(file)
+        cfg._expand_paths(yaml_data)
+        print(f"config file profile is: {yaml_data}")
 
-    #cfg.init(ctx, config_file, debug_level)
+        DefaultConfig.model_validate(yaml_data)
+        config_dict = config.model_dump(warnings=False)
+        config_file_dict = always_merger.merge(config_dict, yaml_data)
+        config = config.model_copy(update=config_file_dict)
+        print(f"Applied configuration in config file at {file_path}")
+    else:
+        print("skipping application of config file at default location")
+
+    ctx.config = config
