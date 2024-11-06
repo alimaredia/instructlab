@@ -176,9 +176,27 @@ def get_sysinfo_by_category() -> typing.Dict[str, list[tuple[str, typing.Any]]]:
     return categories
 
 
+#@click.command(cls=clickext.DynamicConfigCommand)
 @click.command()
+@click.option(
+    "--foo",
+    type=click.STRING,
+    cls=clickext.ConfigOption,
+    config_sections="chat.model",
+)
+@click.option(
+    "--bar",
+    type=click.STRING,
+    cls=clickext.ConfigOption,
+    config_sections="chat.logs_dir",
+)
+@click.pass_context
 @clickext.display_params
-def info():
+def info(ctx, foo, bar):
+    #ctx.ali = ctx.parent.ali
+    #ctx.ali = "hello it's ali info from system()"
+    print(ctx.obj)
+    #print(foo)
     """Print system information"""
     categories = get_sysinfo_by_category()
 

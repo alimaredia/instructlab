@@ -24,6 +24,16 @@ from .defaults import (
 # Python 3.14 will switch to 'spawn' on all platforms.
 multiprocessing.set_start_method(cfg.DEFAULTS.MULTIPROCESSING_START_METHOD, force=True)
 
+class Lab:
+    """Lab object holds high-level information about ilab CLI"""
+
+    def __init__(
+        self,
+        config_obj: DefaultConfig,
+    ) -> None:
+        self.config = config_obj
+
+
 def ensure_storage_directories_exist() -> None:
     """
     Ensures that the default directories used by ilab exist.
@@ -118,7 +128,8 @@ def ilab(ctx, config_file, debug_level: int = 0):
         DefaultConfig.model_validate(yaml_data)
         config_dict = config.model_dump()
         profile_dict = always_merger.merge(config_dict, yaml_data)
-        config = config.model_copy(update=profile_dict)
+        config = DefaultConfig(**profile_dict)
+        #config = config.model_copy(update=profile_dict)
         print("Applied l4x4 custom profile")
     else:
         print("skipping application of custom profiles")
@@ -135,9 +146,12 @@ def ilab(ctx, config_file, debug_level: int = 0):
         DefaultConfig.model_validate(yaml_data)
         config_dict = config.model_dump(warnings=False)
         config_file_dict = always_merger.merge(config_dict, yaml_data)
-        config = config.model_copy(update=config_file_dict)
+        config = DefaultConfig(**config_file_dict)
+        #config = config.model_copy(update=config_file_dict)
         print(f"Applied configuration in config file at {file_path}")
     else:
         print("skipping application of config file at default location")
 
-    ctx.config = config
+    #ctx.config = config
+    ctx.obj = Lab(config)
+    ctx.default_map = config.model_dump(warnings=False)

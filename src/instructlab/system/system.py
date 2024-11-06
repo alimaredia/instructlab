@@ -19,5 +19,9 @@ logger = logging.getLogger(__name__)
 @click.pass_context
 def system(ctx):
     """Command group for all system-related command calls"""
-    ctx.obj = ctx.parent.obj
-    ctx.default_map = ctx.parent.default_map
+    #print(ctx.obj)
+    #ctx.obj = ctx.parent.obj
+    #ctx.ali = ctx.parent.ali
+    #ctx.default_map = ctx.parent.default_map
+    #ctx.ali = "hello it's ali in system() from ilab()"
+    #print(ctx.ali)

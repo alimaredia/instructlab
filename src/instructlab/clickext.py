@@ -10,11 +10,13 @@ import logging
 import os
 import sys
 import typing
+from collections.abc import Sequence
 
 # Third Party
 from click.core import ParameterSource
 from click_didyoumean import DYMGroup
 import click
+from deepmerge import always_merger
 
 # First Party
 from instructlab.configuration import DEFAULTS, BaseModel, storage_dirs_exist
@@ -40,6 +42,14 @@ class LazyEntryPointGroup(DYMGroup):
         if not self.eps.names:
             raise ValueError(f"{ep_group} is empty")
 
+        #self.params.append(
+            #click.Option(
+                #["--ali"],
+                #type=click.Path(),
+                #help="Path to a configuration file.",
+            #)
+        #)
+
     def list_commands(self, ctx: click.Context) -> list[str]:
         result = list(super().list_commands(ctx))
         result.extend(sorted(self.eps.names))
@@ -63,6 +73,13 @@ class ExpandAliasesGroup(LazyEntryPointGroup):
         self.alias_eps: metadata.EntryPoints = metadata.entry_points(
             group=alias_ep_group
         )
+        #self.params.append(
+        #    click.Option(
+        #        ["--ali"],
+        #        type=click.Path(),
+        #        help="Path to a configuration file.",
+        #    )
+        #)
 
     def get_alias_info(self, cmd_name: str) -> tuple[str, str]:
         ep: metadata.EntryPoint = self.alias_eps[cmd_name]
@@ -211,6 +228,28 @@ class ConfigOption(click.Option):
                 section = section.get(secname, {})
             if self.name in section:
                 source = ParameterSource.DEFAULT_MAP
+
+        """
+        print(f"ali here here with value: {value} from source: {source}")
+
+        if value is not None:
+            yaml_data = current = {}
+
+            # Iterate over each key except the last one
+            for k in self.config_sections[:-1]:
+                current[k] = {}
+                current = current[k]  # Move deeper into the nested dictionary
+
+            # Set the value for the last key
+            current[self.config_sections[-1]] = value
+
+            ctx.obj.model_validate(yaml_data)
+            config_dict = ctx.obj.model_dump(warnings=False)
+            profile_dict = always_merger.merge(config_dict, yaml_data)
+            ctx.obj = ctx.obj.model_copy(update=profile_dict)
+
+            print(ctx.obj)
+        """
         return value, source
 
     def get_default(
@@ -363,14 +402,45 @@ def get_default_and_description(
         if field_name == config_identifier[0]:
             value = getattr(cfg, field_name)
             description = field.description
-            default_value = field.get_default(call_default_factory=True)
 
             # If the value is a nested model and there are more names to check, recurse
             # Slice the config_identifier list to remove the current field name
             if isinstance(value, BaseModel) and len(config_identifier) > 1:
                 return get_default_and_description(value, config_identifier[1:])
 
-            return description, default_value
+            return description, value
 
     # If no match is found, raise an exception
     raise ValueError(f"{config_identifier} not in Config object")
+
+class ConfigFileOption(click.Option):
+    """A click.Option to pass into every click subcommand that is the equivalent of
+    @click.option(
+        "--config",
+        "-c",
+        type=click.Path()
+        help="Path to a configuration file.",
+        callback=apply_cfg_file,
+    )
+    """
+
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        super().__init__(*args, **kwargs)
+        #self.param_decls = ["--ali", "-a"]
+        #self.type = click.Path()
+        #self.help = "Path to a configuration file."
+        #self.callback = apply_cfg_file()
+
+class DynamicConfigCommand(click.Command):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.params.append(
+            click.Option(
+                ["--ali"],
+                type=click.Path(),
+                help="Path to a configuration file.",
+            )
+        )
+
+def ali_cb():
+    print("hello it's ali in a callback")
