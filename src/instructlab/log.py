@@ -76,6 +76,29 @@ def add_file_handler_to_logger(
     file_handler.setFormatter(formatter)
     logger.debug(f"Added file handler for log file: {log_file}")
 
+def init_logging(debug: bool) -> None:
+    """
+	Initialize logging before configure_logging is run
+    Args:
+        debug (Bool): determines whether log level will be set to
+                      DEBUG (if true) or INFO (if false)
+    Returns:
+		Nothing
+	"""
+    root = logging.getLogger()
+    # reset handlers, removes existing stream logger
+    for handler in root.handlers[:]:
+        root.removeHandler(handler)
+        handler.close()
+
+    stream = logging.StreamHandler()
+    stream.setFormatter(CustomFormatter(LOG_FORMAT))
+    root.addHandler(stream)
+
+    if debug:
+        root.setLevel(logging.DEBUG)
+    else:
+        root.setLevel(logging.INFO)
 
 def configure_logging(
     *,

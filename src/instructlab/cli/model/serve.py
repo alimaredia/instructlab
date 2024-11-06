@@ -34,19 +34,16 @@ def warn_for_unsupported_backend_param(ctx):
     "--model-path",
     type=click.Path(path_type=pathlib.Path),
     cls=clickext.ConfigOption,
-    required=True,  # default from config
 )
 @click.option(
     "--gpu-layers",
     type=click.INT,
     cls=clickext.ConfigOption,
     config_sections="llama_cpp",
-    required=True,  # default from config
 )
 @click.option(
     "--num-threads",
     type=click.INT,
-    required=False,
     help="The number of CPU threads to use.",
 )
 @click.option(
@@ -63,7 +60,6 @@ def warn_for_unsupported_backend_param(ctx):
 @click.option(
     "--log-file",
     type=click.Path(path_type=pathlib.Path),
-    required=False,
     help="Log file path to write server logs to.",
 )
 @click.option(
@@ -75,7 +71,6 @@ def warn_for_unsupported_backend_param(ctx):
     "--backend",
     type=click.Choice(tuple(backends.SUPPORTED_BACKENDS)),
     cls=clickext.ConfigOption,
-    required=False,  # auto-detect
 )
 @click.option(
     "--gpus",

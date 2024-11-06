@@ -96,13 +96,11 @@ def is_openai_server_and_serving_model(
     "-m",
     "--model",
     cls=clickext.ConfigOption,
-    required=True,  # default from config
 )
 @click.option(
     "-c",
     "--context",
     cls=clickext.ConfigOption,
-    required=True,  # default from config
 )
 @click.option(
     "-s",
