@@ -15,6 +15,7 @@ from instructlab import clickext
 from instructlab import configuration as cfg
 from instructlab import log
 
+from instructlab.profiles.utils import autodetect_profile, apply_profile, load_profile
 from instructlab.profiles.default_configuration import DefaultConfig
 from instructlab.defaults import DEFAULTS
 
@@ -83,15 +84,27 @@ def ensure_storage_directories_exist(logger: logging.Logger) -> None:
 # pylint: disable=redefined-outer-name
 def ilab(ctx, config_file, debug_level: int = 0):
     """CLI for interacting with InstructLab."""
+    # set up logging BEFORE config has been determined
     log.init_logging(bool(debug_level))
     logger = logging.getLogger()
     ensure_storage_directories_exist(logger)
     config = DefaultConfig()
-    click.secho(f"Set default configuration", fg="green")
+
+    profile_file, profile_name = autodetect_profile()
+    logger.debug(f"Applying {profile_name} configuration")
+    if profile_file is not None:
+        hardware_profile = load_profile(profile_file)
+        config = apply_profile(config, hardware_profile)
+
+    if bool(debug_level):
+        click.secho(f"Set {profile_name} configuration")
+    else:
+        click.secho(f"Set {profile_name} configuration. Run `ilab -v` for more information", fg="green")
 
     ctx.obj = Lab(config_obj=config)
     ctx.default_map = config.model_dump(warnings=False)
 
+    # setup logging AFTER config has been determined
     log.configure_logging(
         log_level=ctx.obj.config.general.log_level.upper(),
         debug_level=ctx.obj.config.general.debug_level,

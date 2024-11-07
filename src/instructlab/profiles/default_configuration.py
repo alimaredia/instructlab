@@ -3,6 +3,7 @@
 # Standard
 from typing import Any, Optional
 import logging
+from os import path
 
 # Third Party
 # pylint: disable=ungrouped-imports
@@ -118,6 +119,12 @@ class _chat(BaseModel):
         description="The maximum number of tokens that can be generated in the chat completion. Be aware that larger values use more memory.",
     )
 
+    def __init__(self, **data):
+        super().__init__(**data)
+        if 'model' in data:
+            if DEFAULTS.MODELS_DIR not in data['model']:
+                self.model = path.join(DEFAULTS.MODELS_DIR, data['model'])
+
 
 class _serve_vllm(BaseModel):
     """Class describing configuration of vLLM serving backend."""
@@ -204,6 +211,12 @@ class _serve(BaseModel):
     def api_base(self):
         """Returns server API URL, based on the configured host and port"""
         return f"http://{self.host_port}/v1"
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        if 'model_path' in data:
+            if DEFAULTS.MODELS_DIR not in data['model_path']:
+                self.model_path = path.join(DEFAULTS.MODELS_DIR, data['model_path'])
 
 class _generate(BaseModel):
     """Class describing configuration of the 'generate' sub-command."""

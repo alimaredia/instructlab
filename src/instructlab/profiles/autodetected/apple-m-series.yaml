@@ -1,0 +1,7 @@
+chat:
+  logs_dir: ~/.local/share/instructlab/chatlogs
+  model: granite-7b-lab-Q4_K_M.gguf
+serve:
+  backend: llama-cpp
+  chat_template: auto
+  model_path: granite-7b-lab-Q4_K_M.gguf

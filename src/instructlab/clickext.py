@@ -367,14 +367,13 @@ def get_default_and_description(
         if field_name == config_identifier[0]:
             value = getattr(cfg, field_name)
             description = field.description
-            default_value = field.get_default(call_default_factory=True)
 
             # If the value is a nested model and there are more names to check, recurse
             # Slice the config_identifier list to remove the current field name
             if isinstance(value, BaseModel) and len(config_identifier) > 1:
                 return get_default_and_description(value, config_identifier[1:])
 
-            return description, default_value
+            return description, value
 
     # If no match is found, raise an exception
     raise ValueError(f"{config_identifier} not in Config object")
