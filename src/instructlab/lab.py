@@ -63,6 +63,7 @@ def ensure_storage_directories_exist(logger: logging.Logger) -> None:
     alias_ep_group="instructlab.command.alias",
 )
 @click.option(
+    "-c",
     "--config",
     "config_file",
     type=click.Path(),
@@ -100,6 +101,13 @@ def ilab(ctx, config_file, debug_level: int = 0):
         click.secho(f"Set {profile_name} configuration")
     else:
         click.secho(f"Set {profile_name} configuration. Run `ilab -v` for more information", fg="green")
+
+    if os.path.isfile(config_file):
+        config_profile = load_profile(config_file)
+        config = apply_profile(config, config_profile)
+        click.secho(f"Applied configuration from file at {config_file}", fg="green")
+    else:
+        logger.debug(f"No configuration file provided or detected at {config_file}")
 
     ctx.obj = Lab(config_obj=config)
     ctx.default_map = config.model_dump(warnings=False)
