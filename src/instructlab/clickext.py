@@ -167,7 +167,7 @@ class ConfigOption(click.Option):
             assert name is not None
 
         # create help extra
-        description, default_value = get_default_and_description(
+        description, default_value = get_value_and_description(
             ctx.obj.config, config_identifier
         )
         if default_value is None:
@@ -340,15 +340,15 @@ def display_params(f: typing.Callable) -> typing.Callable:
     return human_option(json_option(wrapper))
 
 
-def get_default_and_description(
+def get_value_and_description(
     cfg: BaseModel, config_identifier: list[str]
 ) -> typing.Tuple[str | None, typing.Any]:
     """
-    Retrieve the default value and description for a given configuration field name.
+    Retrieve the value and description for a given configuration field name.
 
     This function searches through the fields of a Pydantic BaseModel to find a field
     that matches the provided configuration name. If the field is found, it returns
-    the field's description and default value. If the field is a nested model, the
+    the field's description and value. If the field is a nested model, the
     function is called recursively to search within the nested model.
 
     Args:
@@ -357,7 +357,7 @@ def get_default_and_description(
 
     Returns:
         typing.Tuple[str | None, typing.Any]: A tuple containing the field's description
-        and default value. If the field is not found, a ValueError is raised.
+        and value. If the field is not found, a ValueError is raised.
 
     Raises:
         ValueError: If the specified config_identifier is not found in the model.
@@ -371,7 +371,7 @@ def get_default_and_description(
             # If the value is a nested model and there are more names to check, recurse
             # Slice the config_identifier list to remove the current field name
             if isinstance(value, BaseModel) and len(config_identifier) > 1:
-                return get_default_and_description(value, config_identifier[1:])
+                return get_value_and_description(value, config_identifier[1:])
 
             return description, value
 
