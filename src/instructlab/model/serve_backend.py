@@ -43,7 +43,7 @@ def serve_backend(
     # First Party
     from instructlab.model.backends import llama_cpp, vllm
 
-    host, port = utils.split_hostport(ctx.obj.config.serve.host_port)
+    host, port = utils.split_hostport(ctx.obj.config.model.serve.host_port)
 
     try:
         backend = backends.get(model_path, backend)
@@ -51,7 +51,7 @@ def serve_backend(
         raise ValueError(f"Failed to determine backend: {e}") from e
 
     if chat_template is None:
-        chat_template = ctx.obj.config.serve.chat_template
+        chat_template = ctx.obj.config.model.serve.chat_template
 
     logger.info(
         f"Using model '{model_path}' with {gpu_layers} gpu-layers and {max_ctx_size} max context size."
@@ -62,7 +62,7 @@ def serve_backend(
         if ctx.args:
             ctx.fail(f"Unsupported extra arguments: {', '.join(ctx.args)}")
         backend_instance = llama_cpp.Server(
-            api_base=ctx.obj.config.serve.api_base(),
+            api_base=ctx.obj.config.model.serve.api_base(),
             model_path=model_path,
             model_family=model_family,
             chat_template=chat_template,
@@ -80,24 +80,24 @@ def serve_backend(
 
         warn_for_unsupported_backend_param(ctx)
 
-        ctx.obj.config.serve.vllm.vllm_args = ctx.obj.config.serve.vllm.vllm_args or []
+        ctx.obj.config.model.serve.vllm.vllm_args = ctx.obj.config.model.serve.vllm.vllm_args or []
         if gpus:
             if contains_argument(
-                "--tensor-parallel-size", ctx.obj.config.serve.vllm.vllm_args
+                "--tensor-parallel-size", ctx.obj.config.model.serve.vllm.vllm_args
             ):
                 logger.info(
                     "'--gpus' flag used alongside '--tensor-parallel-size' in the vllm_args section of the config file. Using value of the --gpus flag."
                 )
-            ctx.obj.config.serve.vllm.vllm_args.extend(
+            ctx.obj.config.model.serve.vllm.vllm_args.extend(
                 ["--tensor-parallel-size", str(gpus)]
             )
 
-        vllm_args = ctx.obj.config.serve.vllm.vllm_args
+        vllm_args = ctx.obj.config.model.serve.vllm.vllm_args
         if ctx.args:
             vllm_args.extend(ctx.args)
 
         backend_instance = vllm.Server(
-            api_base=ctx.obj.config.serve.api_base(),
+            api_base=ctx.obj.config.model.serve.api_base(),
             model_family=model_family,
             model_path=model_path,
             chat_template=chat_template,

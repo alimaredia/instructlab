@@ -195,7 +195,7 @@ def chat(
     # First Party
     from instructlab.model.backends.common import is_temp_server_running
 
-    users_endpoint_url = cfg.get_api_base(ctx.obj.config.serve.host_port)
+    users_endpoint_url = cfg.get_api_base(ctx.obj.config.model.serve.host_port)
 
     # we prefer the given endpoint when one is provided, else we check if the user
     # is actively serving something before falling back to serving our own model
@@ -226,9 +226,9 @@ def chat(
         if serving_log_file:
             log.add_file_handler_to_logger(root_logger, serving_log_file)
 
-        ctx.obj.config.serve.llama_cpp.llm_family = model_family
+        ctx.obj.config.model.serve.llama_cpp.llm_family = model_family
         backend_instance = backends.select_backend(
-            ctx.obj.config.serve,
+            ctx.obj.config.model.serve,
             model_path=model,
             log_file=serving_log_file,
         )
@@ -257,9 +257,9 @@ def chat(
             # We need to get the base name of the model because the model path is a full path and
             # the once from the config is just the model name
             os.path.basename(model) == cfg.DEFAULTS.GRANITE_GGUF_MODEL_NAME
-            and os.path.basename(ctx.obj.config.chat.model)
+            and os.path.basename(ctx.obj.config.model.chat.model)
             == cfg.DEFAULTS.GRANITE_GGUF_MODEL_NAME
-            and api_base == ctx.obj.config.serve.api_base()
+            and api_base == ctx.obj.config.model.serve.api_base()
         ):
             logger.debug(
                 "No model was provided by the user as a CLI argument or in the config, will use the model from the server"
@@ -278,7 +278,7 @@ def chat(
                 model = (
                     server_model
                     if server_model is not None
-                    and server_model != ctx.obj.config.chat.model
+                    and server_model != ctx.obj.config.model.chat.model
                     else model
                 )
                 logger.debug(f"Using model from server {model}")
@@ -298,7 +298,7 @@ def chat(
         chat_cli(
             ctx,
             api_base=api_base,
-            config=ctx.obj.config.chat,
+            config=ctx.obj.config.model.chat,
             question=question,
             model=model,
             context=context,

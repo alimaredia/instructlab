@@ -147,12 +147,13 @@ class ConfigOption(click.Option):
             # missing default map (clickman, sphinx)
             return result
 
+        parent_cmd = ctx.parent.command.name
         cmd = ctx.command.name
         name = self.name
 
         if self.config_sections:
             config_identifier = (
-                [str(cmd)]
+                [str(parent_cmd), str(cmd)]
                 + [
                     str(section)
                     for section in self.config_sections
@@ -161,7 +162,7 @@ class ConfigOption(click.Option):
                 + [str(name)]
             )
         else:
-            config_identifier = [str(cmd), str(name)]
+            config_identifier = [str(parent_cmd), str(cmd), str(name)]
 
         if typing.TYPE_CHECKING:
             assert name is not None

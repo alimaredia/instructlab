@@ -1,16 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Standard
-import logging
 
 # Third Party
 import click
 
 # First Party
 from instructlab import clickext
-
-logger = logging.getLogger(__name__)
-
 
 @click.group(
     cls=clickext.LazyEntryPointGroup,
@@ -19,3 +15,4 @@ logger = logging.getLogger(__name__)
 @click.pass_context
 def system(ctx):
     """Command group for all system-related command calls"""
+    ctx.default_map = ctx.parent.default_map.get('system')

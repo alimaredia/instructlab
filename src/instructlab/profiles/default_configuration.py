@@ -567,6 +567,44 @@ class _train(BaseModel):
         description="TODO",
     )
 
+
+class _model(BaseModel):
+    """Class describing configuration of the 'model' commands."""
+
+    # pydantic configuration
+    model_config = ConfigDict(extra="ignore")
+
+    # chat configuration
+    chat: _chat = Field(
+        default_factory=_chat, description="Chat configuration section."
+    )
+
+    # serve configuration (includes both llama-cpp and vLLM configuration)
+    serve: _serve = Field(
+        default_factory=_serve, description="Serve configuration section."
+    )
+
+class _info(BaseModel):
+    """Class describing configuration of the 'system info' sub-command."""
+
+    # model configuration
+    model_config = ConfigDict(extra="ignore")
+    new_var: str = Field(
+        default="foo",
+        description="throw away variable for illustrative pusposes",
+    )
+
+class _system(BaseModel):
+    """Class describing configuration of the 'system' commands."""
+
+    # pydantic configuration
+    model_config = ConfigDict(extra="ignore")
+
+    # chat configuration
+    info: _info = Field(
+        default_factory=_info, description="System info configuration section."
+    )
+
 class DefaultConfig(BaseModel):
     """Configuration for the InstructLab CLI.
     Config options are defined by the respective subclasses and are loaded into a single 'Config' object here
@@ -574,17 +612,18 @@ class DefaultConfig(BaseModel):
     Note that values here can be overriden by a users 'config.yaml' or command line overrides in some cases
     """
 
-    # chat configuration
-    chat: _chat = Field(
-        default_factory=_chat, description="Chat configuration section."
+    # model commands configuration
+    model: _model = Field(
+        default_factory=_model, description="Model commands configuration section."
+    )
+
+    # system commands configuration
+    system: _system = Field(
+        default_factory=_system, description="System commands configuration section."
     )
     # generate configuration
     generate: _generate = Field(
         default_factory=_generate, description="Generate configuration section."
-    )
-    # serve configuration (includes both llama-cpp and vLLM configuration)
-    serve: _serve = Field(
-        default_factory=_serve, description="Serve configuration section."
     )
     # train configuration
     train: _train = Field(

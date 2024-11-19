@@ -1,7 +1,8 @@
-chat:
-  model: instructlab/granite-7b-lab
-serve:
-  backend: vllm
-  model_path: instructlab/granite-7b-lab
-  vllm:
-    gpus: 1
+model:
+  chat:
+    model: instructlab/granite-7b-lab
+  serve:
+    backend: vllm
+    model_path: instructlab/granite-7b-lab
+    vllm:
+      gpus: 1

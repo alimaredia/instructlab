@@ -177,9 +177,18 @@ def get_sysinfo_by_category() -> typing.Dict[str, list[tuple[str, typing.Any]]]:
 
 
 @click.command()
+@click.option(
+    "--new-var",
+    cls=clickext.ConfigOption,
+)
+@click.pass_context
 @clickext.display_params
-def info():
+def info(
+    ctx: click.Context,
+    new_var: str,
+) -> None:
     """Print system information"""
+    print(f"New var for demo is: {new_var}")
     categories = get_sysinfo_by_category()
 
     for idx, (category, items) in enumerate(categories.items()):

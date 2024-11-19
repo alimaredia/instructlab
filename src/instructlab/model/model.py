@@ -8,8 +8,6 @@ import click
 
 # First Party
 from instructlab import clickext
-from instructlab.configuration import storage_dirs_exist
-
 
 @click.group(
     cls=clickext.LazyEntryPointGroup,
@@ -20,4 +18,4 @@ from instructlab.configuration import storage_dirs_exist
 def model(ctx):
     """Command Group for Interacting with the Models in InstructLab.
     """
-    ctx.default_map = ctx.parent.default_map
+    ctx.default_map = ctx.parent.default_map.get('model')
