@@ -572,7 +572,7 @@ class _model(BaseModel):
     """Class describing configuration of the 'model' commands."""
 
     # pydantic configuration
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="forbid")
 
     # chat configuration
     chat: _chat = Field(
@@ -588,7 +588,7 @@ class _info(BaseModel):
     """Class describing configuration of the 'system info' sub-command."""
 
     # model configuration
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="forbid")
     new_var: str = Field(
         default="foo",
         description="throw away variable for illustrative pusposes",
@@ -598,7 +598,7 @@ class _system(BaseModel):
     """Class describing configuration of the 'system' commands."""
 
     # pydantic configuration
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="forbid")
 
     # chat configuration
     info: _info = Field(
@@ -638,7 +638,7 @@ class DefaultConfig(BaseModel):
         default_factory=_general, description="General configuration section."
     )
     # model configuration
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(extra="forbid")
     # config file versioning
     version: str = Field(
         default=CONFIG_VERSION,

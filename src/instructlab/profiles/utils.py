@@ -76,15 +76,18 @@ def load_profile(profile_file: str) -> dict:
 	return hardware_profile
 
 def print_bad_keys(validation_error: ValidationError) -> None:
-	errors = validation_error.errors(include_url=False)
-	for error in errors:
-		bad_key = ""
-		for loc in error['loc']:
-			if loc == error['loc'][-1]:
-				bad_key += (loc)
-			else:
-				bad_key += (loc + ".")
-		click.secho(f"{bad_key} is not a valid configuration option", fg="red")
+    errors = validation_error.errors(include_url=False)
+    for error in errors:
+        bad_key = ""
+        for loc in error['loc']:
+            if loc == error['loc'][-1]:
+                bad_key += (loc)
+            else:
+                bad_key += (loc + ".")
+        var_type = "section"
+        if len(error['loc']) == 3:
+            var_type = "variable"
+        logger.debug(f"{bad_key} is not a valid configuration {var_type}")
 
 def apply_profile(config: DefaultConfig, profile: dict) -> DefaultConfig:
 	try:

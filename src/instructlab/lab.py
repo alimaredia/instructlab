@@ -94,15 +94,17 @@ def ilab(ctx, config_file, debug_level: int = 0):
     profile_file, profile_name = autodetect_profile()
     logger.debug(f"Applying {profile_name} configuration")
     if profile_file is not None:
+        logger.debug(f"Applying {profile_name} configuration")
         hardware_profile = load_profile(profile_file)
         config = apply_profile(config, hardware_profile)
 
     if bool(debug_level):
-        click.secho(f"Set {profile_name} configuration")
+        click.secho(f"Set {profile_name} configuration", fg="green")
     else:
         click.secho(f"Set {profile_name} configuration. Run `ilab -v` for more information", fg="green")
 
     if os.path.isfile(config_file):
+        logger.debug(f"Applying configuration provided or detected at {config_file}")
         config_profile = load_profile(config_file)
         config = apply_profile(config, config_profile)
         click.secho(f"Applied configuration from file at {config_file}", fg="green")
