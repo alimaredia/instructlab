@@ -1,0 +1,442 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="prev" title="CI for InstructLab" href="ci.html" />
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>InstructLab CLI Release Strategy - InstructLab documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">InstructLab  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">InstructLab  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ilab.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">CLI Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user/index.html">Helpful User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Helpful User Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user/PROMPTING-FAQ.html">Prompting FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/instructlab_models.html">InstructLab LLM guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/converting_GGUF.html">Optional: Converting a Model to GGUF and Quantizing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../accelerators/index.html">Accelerators</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Accelerators</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../accelerators/habana-gaudi.html">Intel Gaudi / Habana Labs HPU with SynapseAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../accelerators/amd-rocm.html">InstructLab toolbox container for AMD ROCm GPUs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../accelerators/gpu-acceleration.html">🏎️ Making <code class="docutils literal notranslate"><span class="pre">ilab</span></code> go fast</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Maintainer Documentation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Maintainer Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ci.html">CI for InstructLab</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">InstructLab CLI Release Strategy</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/maintainers/release-strategy.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="instructlab-cli-release-strategy">
+<h1>InstructLab CLI Release Strategy<a class="headerlink" href="#instructlab-cli-release-strategy" title="Link to this heading">¶</a></h1>
+<p>This document discusses the release strategy and processes for the
+<code class="docutils literal notranslate"><span class="pre">instructlab</span></code> Python package built from the
+<a class="reference external" href="https://github.com/instructlab/instructlab">https://github.com/instructlab/instructlab</a> git repository.</p>
+<section id="versioning-scheme">
+<h2>Versioning Scheme<a class="headerlink" href="#versioning-scheme" title="Link to this heading">¶</a></h2>
+<p>Releases use a <code class="docutils literal notranslate"><span class="pre">X.Y.Z</span></code> numbering scheme.</p>
+<p>X-stream release are for major releases. At this stage in the project a major release has not been cut and we expect each release to be a new Y-stream.</p>
+<p>Z-stream releases are meant for critical bug and documentation fixes. Z-stream releases are cut as maintainers see fit.</p>
+</section>
+<section id="schedule">
+<h2>Schedule<a class="headerlink" href="#schedule" title="Link to this heading">¶</a></h2>
+<p>The project currently operates on a time-based release schedule.
+The goal is to release a new Y-stream every 2-3 weeks though the time span remains flexible based on the discretion of the maintainers team.</p>
+<p>The cadence for major releases starting from 1.0 onward will be determined as the project matures.</p>
+<p>A schedule will be updated in a markdown file on the <a class="reference external" href="https://github.com/instructlab/instructlab">https://github.com/instructlab/instructlab</a> GitHub repository.</p>
+</section>
+<section id="release-tracking">
+<h2>Release Tracking<a class="headerlink" href="#release-tracking" title="Link to this heading">¶</a></h2>
+<p>Release planning is tracked via <a class="reference external" href="https://github.com/instructlab/instructlab/milestones">milestones</a> in GitHub. Milestones on GitHub will exist for the next two releases.</p>
+<p>PRs and Issues associated with the next two milestones will be prioritized for review and merging into the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch of instructlab.</p>
+</section>
+<section id="git-branches-and-tags">
+<h2>Git Branches and Tags<a class="headerlink" href="#git-branches-and-tags" title="Link to this heading">¶</a></h2>
+<p>Every <code class="docutils literal notranslate"><span class="pre">X.Y</span></code> release stream gets a new branch.</p>
+<p>Each release, <code class="docutils literal notranslate"><span class="pre">X.Y.Z</span></code>, exists as a tag named <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code>.</p>
+</section>
+<section id="release-branch-maintenance">
+<h2>Release Branch Maintenance<a class="headerlink" href="#release-branch-maintenance" title="Link to this heading">¶</a></h2>
+<p>Maintenance efforts are only on the most recent Y-stream.
+Critical bug fixes are backported to the most recent release branch.</p>
+</section>
+<section id="release-mechanics">
+<h2>Release Mechanics<a class="headerlink" href="#release-mechanics" title="Link to this heading">¶</a></h2>
+<p>Release mechanics are done by a Release Manager identified for that release.
+The Release Manager is a member of the CLI Maintainers team that has agreed to take on these responsibilities.
+The Release Manager can change on a per-release basis.
+The Release Manager for each release is identified in the Description of the Milestone used to plan and track that release on GitHub.</p>
+<p>The following are the steps for how Y-stream and Z-stream releases gets cut.</p>
+<section id="y-stream">
+<h3>Y-Stream<a class="headerlink" href="#y-stream" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Determine a commit on the main branch that will serve as the basis for the next release - most of the time this should be the latest commit.</p></li>
+<li><p>Create a new release branch in the format <code class="docutils literal notranslate"><span class="pre">release-vX.Y</span></code> off of the determined commit (will match <code class="docutils literal notranslate"><span class="pre">main</span></code> if the latest commit is chosen).</p></li>
+<li><p>Open a PR to the new release branch capping the InstructLab Libraries (SDG, Training, Eval) to the desired Y-Streams</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="ci.html"><span class="std std-doc">Run a large E2E CI job</span></a> against this PR to ensure full E2E coverage of the release candidate</p></li>
+<li><p>Example: <a class="reference external" href="https://github.com/instructlab/instructlab/pull/2564">https://github.com/instructlab/instructlab/pull/2564</a></p></li>
+</ul>
+</li>
+<li><p>Create a new release on GitHub targeting the release branch and using the latest Y-Stream tag as the previous release (e.g. <code class="docutils literal notranslate"><span class="pre">0.15.1</span></code> precedes <code class="docutils literal notranslate"><span class="pre">0.16.0</span></code>).</p></li>
+<li><p>Announce release via the following:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">#announce</span></code> channel on Slack</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">#announce</span></code> channel on Discord</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">announce</span></code> mailing list</p></li>
+</ul>
+</li>
+<li><p>Create a milestone on GitHub for the next release without a milestone.</p></li>
+</ol>
+</section>
+<section id="z-stream">
+<h3>Z-Stream<a class="headerlink" href="#z-stream" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Backport all relevant commits from <code class="docutils literal notranslate"><span class="pre">main</span></code> to the <code class="docutils literal notranslate"><span class="pre">release-vX.Y</span></code> branch - this can be done automatically with Mergify or manually if preferred. A backport using Mergify is done by adding a comment to the PR with the change merged to <code class="docutils literal notranslate"><span class="pre">main</span></code> with the contents <code class="docutils literal notranslate"><span class="pre">&#64;Mergifyio</span> <span class="pre">backport</span> <span class="pre">&lt;release-vX.Y&gt;</span></code>.</p></li>
+<li><p>Validate the release branch with an <a class="reference internal" href="ci.html"><span class="std std-doc">E2E test</span></a>.</p></li>
+<li><p>Create a new release on GitHub targeting the release branch and using the previous Z-Stream tag as the previous release (e.g. <code class="docutils literal notranslate"><span class="pre">0.15.0</span></code> precedes <code class="docutils literal notranslate"><span class="pre">0.15.1</span></code>).</p></li>
+<li><p>If changes warrant an announcement, announce via the following:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">#announce</span></code> channel on Slack</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">#announce</span></code> channel on Discord</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">announce</span></code> mailing list</p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+<section id="release-notes">
+<h2>Release Notes<a class="headerlink" href="#release-notes" title="Link to this heading">¶</a></h2>
+<p>The project maintains a single <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> file that documents all releases. To ensure our users
+are well-informed about new features, improvements, and breaking changes, we maintain a
+<code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> file. This file serves as a centralized place to document changes that will be
+included in the next (X) or (Y) release. Given that the project is in its early stages, we are
+currently focused on documenting changes for the next (Y) release.</p>
+<section id="editing-release-notes">
+<h3>Editing Release Notes<a class="headerlink" href="#editing-release-notes" title="Link to this heading">¶</a></h3>
+<p>When submitting a Pull Request (PR) that introduces notable features or breaking changes, committers
+need to update the <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> file. Clearly describe the changes, their impact, and
+any actions users might need to take. We want clear, concise, and user-friendly notes.</p>
+</section>
+<section id="branching-for-a-new-release">
+<h3>Branching for a New Release<a class="headerlink" href="#branching-for-a-new-release" title="Link to this heading">¶</a></h3>
+<p>Each time we prepare for a new (X) or (Y) release, we branch out from the main codebase.
+As part of this branching process, the contents of <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> are reviewed and
+finalized.</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="ci.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">CI for InstructLab</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, InstructLab Authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">InstructLab CLI Release Strategy</a><ul>
+<li><a class="reference internal" href="#versioning-scheme">Versioning Scheme</a></li>
+<li><a class="reference internal" href="#schedule">Schedule</a></li>
+<li><a class="reference internal" href="#release-tracking">Release Tracking</a></li>
+<li><a class="reference internal" href="#git-branches-and-tags">Git Branches and Tags</a></li>
+<li><a class="reference internal" href="#release-branch-maintenance">Release Branch Maintenance</a></li>
+<li><a class="reference internal" href="#release-mechanics">Release Mechanics</a><ul>
+<li><a class="reference internal" href="#y-stream">Y-Stream</a></li>
+<li><a class="reference internal" href="#z-stream">Z-Stream</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-notes">Release Notes</a><ul>
+<li><a class="reference internal" href="#editing-release-notes">Editing Release Notes</a></li>
+<li><a class="reference internal" href="#branching-for-a-new-release">Branching for a New Release</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>

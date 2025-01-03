@@ -1,0 +1,1712 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="CLI Configuration" href="config.html" /><link rel="prev" title="Welcome to InstructLab’s documentation!" href="index.html" />
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>CLI Reference - InstructLab documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">InstructLab  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">InstructLab  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">CLI Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="user/index.html">Helpful User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Helpful User Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/PROMPTING-FAQ.html">Prompting FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/instructlab_models.html">InstructLab LLM guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/converting_GGUF.html">Optional: Converting a Model to GGUF and Quantizing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="accelerators/index.html">Accelerators</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Accelerators</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="accelerators/habana-gaudi.html">Intel Gaudi / Habana Labs HPU with SynapseAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accelerators/amd-rocm.html">InstructLab toolbox container for AMD ROCm GPUs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="accelerators/gpu-acceleration.html">🏎️ Making <code class="docutils literal notranslate"><span class="pre">ilab</span></code> go fast</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="maintainers/index.html">Maintainer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Maintainer Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="maintainers/ci.html">CI for InstructLab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintainers/release-strategy.html">InstructLab CLI Release Strategy</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/ilab.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="cli-reference">
+<h1>CLI Reference<a class="headerlink" href="#cli-reference" title="Link to this heading">¶</a></h1>
+<p>The following documentation is auto-generated from the <code class="docutils literal notranslate"><span class="pre">ilab</span></code> code.</p>
+<section id="ilab">
+<h2>ilab<a class="headerlink" href="#ilab" title="Link to this heading">¶</a></h2>
+<p>CLI for interacting with InstructLab.</p>
+<p>If this is your first time running ilab, it’s best to start with <cite>ilab config init</cite> to create the environment.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config">
+<span class="sig-name descname"><span class="pre">--config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;config_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config" title="Link to this definition">¶</a></dt>
+<dd><p>Path to a configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'/home/runner/.config/instructlab/config.yaml'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-v">
+<span id="cmdoption-ilab-verbose"></span><span class="sig-name descname"><span class="pre">-v</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--verbose</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-v" title="Link to this definition">¶</a></dt>
+<dd><p>Enable debug logging (repeat for even more verbosity)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-version">
+<span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-version" title="Link to this definition">¶</a></dt>
+<dd><p>Show the version and exit.</p>
+</dd></dl>
+
+<section id="ilab-config">
+<h3>config<a class="headerlink" href="#ilab-config" title="Link to this heading">¶</a></h3>
+<p>Command Group for Interacting with the Config of InstructLab.</p>
+<p>If this is your first time running ilab, it’s best to start with <cite>ilab config init</cite> to create the environment.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>config<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="ilab-config-edit">
+<h4>edit<a class="headerlink" href="#ilab-config-edit" title="Link to this heading">¶</a></h4>
+<p>Launch $EDITOR to edit the configuration file.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>config<span class="w"> </span>edit<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="ilab-config-init">
+<h4>init<a class="headerlink" href="#ilab-config-init" title="Link to this heading">¶</a></h4>
+<p>Initializes environment for InstructLab</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>config<span class="w"> </span>init<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-interactive">
+<span id="cmdoption-ilab-config-init-non-interactive"></span><span class="sig-name descname"><span class="pre">--interactive</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--non-interactive</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-config-init-interactive" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize the environment assuming defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-model-path">
+<span class="sig-name descname"><span class="pre">--model-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-init-model-path" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the model used during generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">instructlab</span> <span class="pre">data</span> <span class="pre">files</span> <span class="pre">location</span> <span class="pre">per</span> <span class="pre">the</span> <span class="pre">user's</span> <span class="pre">system.&quot;</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-taxonomy-base">
+<span class="sig-name descname"><span class="pre">--taxonomy-base</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_base&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-init-taxonomy-base" title="Link to this definition">¶</a></dt>
+<dd><p>Base git-ref to use when listing/generating new taxonomy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'origin/main'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-taxonomy-path">
+<span class="sig-name descname"><span class="pre">--taxonomy-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-init-taxonomy-path" title="Link to this definition">¶</a></dt>
+<dd><p>Path to where the taxonomy should be cloned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">instructlab</span> <span class="pre">data</span> <span class="pre">files</span> <span class="pre">location</span> <span class="pre">per</span> <span class="pre">the</span> <span class="pre">user's</span> <span class="pre">system.&quot;</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-repository">
+<span class="sig-name descname"><span class="pre">--repository</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;repository&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-init-repository" title="Link to this definition">¶</a></dt>
+<dd><p>Taxonomy repository location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'https://github.com/instructlab/taxonomy.git'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-min-taxonomy">
+<span class="sig-name descname"><span class="pre">--min-taxonomy</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-config-init-min-taxonomy" title="Link to this definition">¶</a></dt>
+<dd><p>Shallow clone the taxonomy repository with minimum size. Please do not use this option if you are planning to contribute back using the same taxonomy repository.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-profile">
+<span class="sig-name descname"><span class="pre">--profile</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;profile&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-init-profile" title="Link to this definition">¶</a></dt>
+<dd><p>Overwrite the default values in the generated config.yaml by passing in an existing configuration yaml.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-init-config">
+<span class="sig-name descname"><span class="pre">--config</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;config_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-init-config" title="Link to this definition">¶</a></dt>
+<dd><p>Path to a configuration file.</p>
+</dd></dl>
+
+<p class="rubric">Environment variables</p>
+<dl class="std envvar" id="ilab-config-init-config-file-ilab-global-config">
+<dt class="sig sig-object std">
+<span class="sig-name descname"><span class="pre">ILAB_GLOBAL_CONFIG</span></span></dt>
+<dd><blockquote>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-ilab-config-init-config"><code class="xref std std-option docutils literal notranslate"><span class="pre">--config</span></code></a></p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="ilab-config-show">
+<h4>show<a class="headerlink" href="#ilab-config-show" title="Link to this heading">¶</a></h4>
+<p>Displays the current config as YAML with an option to extract a specific key.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>config<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-show-k">
+<span id="cmdoption-ilab-config-show-key"></span><span class="sig-name descname"><span class="pre">-k</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;key_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-config-show-k" title="Link to this definition">¶</a></dt>
+<dd><p>Show only a specific section of the configuration, e.g., -k chat or -k chat.context</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-config-show-wc">
+<span id="cmdoption-ilab-config-show-without-comments"></span><span class="sig-name descname"><span class="pre">-wc</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--without-comments</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-config-show-wc" title="Link to this definition">¶</a></dt>
+<dd><p>Show the config without comments. Can be used in conjunction with -k.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="ilab-data">
+<h3>data<a class="headerlink" href="#ilab-data" title="Link to this heading">¶</a></h3>
+<p>Command Group for Interacting with the Data generated by InstructLab.</p>
+<p>If this is your first time running ilab, it’s best to start with <cite>ilab config init</cite> to create the environment.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>data<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="ilab-data-generate">
+<h4>generate<a class="headerlink" href="#ilab-data-generate" title="Link to this heading">¶</a></h4>
+<p>Generates synthetic data to enhance your example data</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>data<span class="w"> </span>generate<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-model">
+<span class="sig-name descname"><span class="pre">--model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-num-cpus">
+<span class="sig-name descname"><span class="pre">--num-cpus</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;num_cpus&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-num-cpus" title="Link to this definition">¶</a></dt>
+<dd><p>Number of processes to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">10</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-chunk-word-count">
+<span class="sig-name descname"><span class="pre">--chunk-word-count</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;chunk_word_count&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-chunk-word-count" title="Link to this definition">¶</a></dt>
+<dd><p>Number of words to chunk the document</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">1000</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-sdg-scale-factor">
+<span class="sig-name descname"><span class="pre">--sdg-scale-factor</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;sdg_scale_factor&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-sdg-scale-factor" title="Link to this definition">¶</a></dt>
+<dd><p>Number of instructions to generate for each seed example. The examples map to sample q&amp;a pairs for new skills. For knowledge, examples are generated with both the sample q&amp;a pairs, as well as chunks of the knowledge document(s), so the resulting data set is typically larger for a knowledge addition for the same value of <cite>–sdg-scale-factor</cite>.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-taxonomy-path">
+<span class="sig-name descname"><span class="pre">--taxonomy-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-taxonomy-path" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-taxonomy-base">
+<span class="sig-name descname"><span class="pre">--taxonomy-base</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_base&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-taxonomy-base" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-output-dir">
+<span class="sig-name descname"><span class="pre">--output-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-output-dir" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-quiet">
+<span class="sig-name descname"><span class="pre">--quiet</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-data-generate-quiet" title="Link to this definition">¶</a></dt>
+<dd><p>Suppress output of synthesized instructions.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-endpoint-url">
+<span class="sig-name descname"><span class="pre">--endpoint-url</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;endpoint_url&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-endpoint-url" title="Link to this definition">¶</a></dt>
+<dd><p>Custom URL endpoint for OpenAI-compatible API. Defaults to the <cite>ilab model serve</cite> endpoint.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-api-key">
+<span class="sig-name descname"><span class="pre">--api-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;api_key&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-api-key" title="Link to this definition">¶</a></dt>
+<dd><p>API key for API endpoint. [default: config.DEFAULT_API_KEY]</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-yaml-rules">
+<span class="sig-name descname"><span class="pre">--yaml-rules</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;yaml_rules&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-yaml-rules" title="Link to this definition">¶</a></dt>
+<dd><p>Custom rules file for YAML linting.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-server-ctx-size">
+<span class="sig-name descname"><span class="pre">--server-ctx-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;server_ctx_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-server-ctx-size" title="Link to this definition">¶</a></dt>
+<dd><p>The context size is the maximum number of tokens the server will consider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">4096</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-tls-insecure">
+<span class="sig-name descname"><span class="pre">--tls-insecure</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-data-generate-tls-insecure" title="Link to this definition">¶</a></dt>
+<dd><p>Disable TLS verification.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-tls-client-cert">
+<span class="sig-name descname"><span class="pre">--tls-client-cert</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_cert&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-tls-client-cert" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the TLS client certificate to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-tls-client-key">
+<span class="sig-name descname"><span class="pre">--tls-client-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_key&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-tls-client-key" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the TLS client key to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-tls-client-passwd">
+<span class="sig-name descname"><span class="pre">--tls-client-passwd</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_passwd&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-tls-client-passwd" title="Link to this definition">¶</a></dt>
+<dd><p>TLS client certificate password.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-model-family">
+<span class="sig-name descname"><span class="pre">--model-family</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_family&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-model-family" title="Link to this definition">¶</a></dt>
+<dd><p>Force model family to use when picking a generation template</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-pipeline">
+<span class="sig-name descname"><span class="pre">--pipeline</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;pipeline&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-pipeline" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-batch-size">
+<span class="sig-name descname"><span class="pre">--batch-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;batch_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-batch-size" title="Link to this definition">¶</a></dt>
+<dd><p>Number of elements to process in each batch through the SDG pipeline. Enabled by default for the vLLM serving backend, with a batch size of 8 chosen based on experiments to optimize for throughput. Use 0 to disable.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-enable-serving-output">
+<span class="sig-name descname"><span class="pre">--enable-serving-output</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-data-generate-enable-serving-output" title="Link to this definition">¶</a></dt>
+<dd><p>Print serving engine logs.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-gpus">
+<span class="sig-name descname"><span class="pre">--gpus</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;gpus&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-gpus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-generate-max-num-tokens">
+<span class="sig-name descname"><span class="pre">--max-num-tokens</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_num_tokens&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-generate-max-num-tokens" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="ilab-data-list">
+<h4>list<a class="headerlink" href="#ilab-data-list" title="Link to this heading">¶</a></h4>
+<p>lists datasets</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>data<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-data-list-dataset-dirs">
+<span class="sig-name descname"><span class="pre">--dataset-dirs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dataset_dirs&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-data-list-dataset-dirs" title="Link to this definition">¶</a></dt>
+<dd><p>Base directories where datasets are stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'/home/runner/.local/share/instructlab/datasets'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="ilab-model">
+<h3>model<a class="headerlink" href="#ilab-model" title="Link to this heading">¶</a></h3>
+<p>Command Group for Interacting with the Models in InstructLab.</p>
+<p>If this is your first time running ilab, it’s best to start with <cite>ilab config init</cite> to create the environment.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="ilab-model-chat">
+<h4>chat<a class="headerlink" href="#ilab-model-chat" title="Link to this heading">¶</a></h4>
+<p>Runs a chat using the modified model</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>chat<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>QUESTION<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-m">
+<span id="cmdoption-ilab-model-chat-model"></span><span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-m" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-c">
+<span id="cmdoption-ilab-model-chat-context"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--context</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;context&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-c" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-s">
+<span id="cmdoption-ilab-model-chat-session"></span><span class="sig-name descname"><span class="pre">-s</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--session</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;session&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-s" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-qq">
+<span id="cmdoption-ilab-model-chat-quick-question"></span><span class="sig-name descname"><span class="pre">-qq</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--quick-question</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-chat-qq" title="Link to this definition">¶</a></dt>
+<dd><p>Exit after answering question.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-max-tokens">
+<span class="sig-name descname"><span class="pre">--max-tokens</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_tokens&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-max-tokens" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-endpoint-url">
+<span class="sig-name descname"><span class="pre">--endpoint-url</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;endpoint_url&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-endpoint-url" title="Link to this definition">¶</a></dt>
+<dd><p>Custom URL endpoint for OpenAI-compatible API. Defaults to the <cite>ilab model serve</cite> endpoint.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-api-key">
+<span class="sig-name descname"><span class="pre">--api-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;api_key&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-api-key" title="Link to this definition">¶</a></dt>
+<dd><p>API key for API endpoint. [default: config.DEFAULT_API_KEY]</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-tls-insecure">
+<span class="sig-name descname"><span class="pre">--tls-insecure</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-chat-tls-insecure" title="Link to this definition">¶</a></dt>
+<dd><p>Disable TLS verification.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-tls-client-cert">
+<span class="sig-name descname"><span class="pre">--tls-client-cert</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_cert&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-tls-client-cert" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the TLS client certificate to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-tls-client-key">
+<span class="sig-name descname"><span class="pre">--tls-client-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_key&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-tls-client-key" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the TLS client key to use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-tls-client-passwd">
+<span class="sig-name descname"><span class="pre">--tls-client-passwd</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_passwd&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-tls-client-passwd" title="Link to this definition">¶</a></dt>
+<dd><p>TLS client certificate password.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-model-family">
+<span class="sig-name descname"><span class="pre">--model-family</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_family&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-model-family" title="Link to this definition">¶</a></dt>
+<dd><p>Force model family to use when picking a chat template</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-serving-log-file">
+<span class="sig-name descname"><span class="pre">--serving-log-file</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;serving_log_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-serving-log-file" title="Link to this definition">¶</a></dt>
+<dd><p>Log file path to write server logs to.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-t">
+<span id="cmdoption-ilab-model-chat-temperature"></span><span class="sig-name descname"><span class="pre">-t</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--temperature</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;temperature&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-chat-t" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-chat-arg-QUESTION">
+<span class="sig-name descname"><span class="pre">QUESTION</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-chat-arg-QUESTION" title="Link to this definition">¶</a></dt>
+<dd><p>Optional argument(s)</p>
+</dd></dl>
+
+</section>
+<section id="ilab-model-convert">
+<h4>convert<a class="headerlink" href="#ilab-model-convert" title="Link to this heading">¶</a></h4>
+<p>Converts model to GGUF</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>convert<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-convert-model-dir">
+<span class="sig-name descname"><span class="pre">--model-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-convert-model-dir" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong> Base directory where model is stored.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-convert-adapter-file">
+<span class="sig-name descname"><span class="pre">--adapter-file</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;adapter_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-convert-adapter-file" title="Link to this definition">¶</a></dt>
+<dd><p>LoRA adapter to fuse.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-convert-sd">
+<span id="cmdoption-ilab-model-convert-skip-de-quantize"></span><span class="sig-name descname"><span class="pre">-sd</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-de-quantize</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-convert-sd" title="Link to this definition">¶</a></dt>
+<dd><p>Skip de-quantization.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-convert-sq">
+<span id="cmdoption-ilab-model-convert-skip-quantize"></span><span class="sig-name descname"><span class="pre">-sq</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-quantize</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-convert-sq" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to skip quantization while converting to GGUF.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-convert-model-name">
+<span class="sig-name descname"><span class="pre">--model-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_name&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-convert-model-name" title="Link to this definition">¶</a></dt>
+<dd><p>Name of the model being trained/converted. Informs the naming of the final trained model file</p>
+</dd></dl>
+
+</section>
+<section id="ilab-model-download">
+<h4>download<a class="headerlink" href="#ilab-model-download" title="Link to this heading">¶</a></h4>
+<p>Downloads model from a specified repository</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>download<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-download-rp">
+<span id="cmdoption-ilab-model-download-repository"></span><span class="sig-name descname"><span class="pre">-rp</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--repository</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;repositories&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-download-rp" title="Link to this definition">¶</a></dt>
+<dd><p>Hugging Face or OCI repository of the model to download.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'instructlab/granite-7b-lab-GGUF',</span> <span class="pre">'instructlab/merlinite-7b-lab-GGUF',</span> <span class="pre">'TheBloke/Mistral-7B-Instruct-v0.2-GGUF'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-download-rl">
+<span id="cmdoption-ilab-model-download-release"></span><span class="sig-name descname"><span class="pre">-rl</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--release</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;releases&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-download-rl" title="Link to this definition">¶</a></dt>
+<dd><p>The revision of the model to download - e.g. a branch, tag, or commit hash for Hugging Face repositories and tag or commit hash for OCI repositories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'main',</span> <span class="pre">'main',</span> <span class="pre">'main'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-download-filename">
+<span class="sig-name descname"><span class="pre">--filename</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;filenames&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-download-filename" title="Link to this definition">¶</a></dt>
+<dd><p>Name of the model file to download from the Hugging Face repository.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'The</span> <span class="pre">default</span> <span class="pre">model</span> <span class="pre">location</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">instructlab</span> <span class="pre">data</span> <span class="pre">directory.'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-download-model-dir">
+<span class="sig-name descname"><span class="pre">--model-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-download-model-dir" title="Link to this definition">¶</a></dt>
+<dd><p>The local directory to download the model files into.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'The</span> <span class="pre">default</span> <span class="pre">system</span> <span class="pre">model</span> <span class="pre">location</span> <span class="pre">store,</span> <span class="pre">located</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">data</span> <span class="pre">directory.'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-download-hf-token">
+<span class="sig-name descname"><span class="pre">--hf-token</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;hf_token&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-download-hf-token" title="Link to this definition">¶</a></dt>
+<dd><p>User access token for connecting to the Hugging Face Hub.</p>
+</dd></dl>
+
+<p class="rubric">Environment variables</p>
+<dl class="std envvar" id="ilab-model-download-hf-token-hf-token">
+<dt class="sig sig-object std">
+<span class="sig-name descname"><span class="pre">HF_TOKEN</span></span></dt>
+<dd><blockquote>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-ilab-model-download-hf-token"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hf-token</span></code></a></p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="ilab-model-evaluate">
+<h4>evaluate<a class="headerlink" href="#ilab-model-evaluate" title="Link to this heading">¶</a></h4>
+<p>Evaluates a trained model</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>evaluate<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-model">
+<span class="sig-name descname"><span class="pre">--model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-base-model">
+<span class="sig-name descname"><span class="pre">--base-model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;base_model&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-base-model" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-benchmark">
+<span class="sig-name descname"><span class="pre">--benchmark</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;benchmark&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-benchmark" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong> Benchmarks to run during evaluation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mmlu | mmlu_branch | mt_bench | mt_bench_branch</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-judge-model">
+<span class="sig-name descname"><span class="pre">--judge-model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;judge_model&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-judge-model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-output-dir">
+<span class="sig-name descname"><span class="pre">--output-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;output_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-output-dir" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-max-workers">
+<span class="sig-name descname"><span class="pre">--max-workers</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_workers&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-max-workers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-taxonomy-path">
+<span class="sig-name descname"><span class="pre">--taxonomy-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-taxonomy-path" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-branch">
+<span class="sig-name descname"><span class="pre">--branch</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;branch&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-branch" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-base-branch">
+<span class="sig-name descname"><span class="pre">--base-branch</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;base_branch&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-base-branch" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-few-shots">
+<span class="sig-name descname"><span class="pre">--few-shots</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;few_shots&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-few-shots" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-batch-size">
+<span class="sig-name descname"><span class="pre">--batch-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;batch_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-batch-size" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-tasks-dir">
+<span class="sig-name descname"><span class="pre">--tasks-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tasks_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-tasks-dir" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-gpus">
+<span class="sig-name descname"><span class="pre">--gpus</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;gpus&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-gpus" title="Link to this definition">¶</a></dt>
+<dd><p>Number of GPUs to utilize for evaluation (not applicable to llama-cpp)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-merge-system-user-message">
+<span class="sig-name descname"><span class="pre">--merge-system-user-message</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-merge-system-user-message" title="Link to this definition">¶</a></dt>
+<dd><p>Indicates whether to merge system and user message for mt_bench and mt_bench_branch (required for Mistral based judges)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-backend">
+<span class="sig-name descname"><span class="pre">--backend</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;backend&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-backend" title="Link to this definition">¶</a></dt>
+<dd><p>Serving backend to use for the model and base model (if applicable) during evaluation. Options are vllm and llama-cpp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>llama-cpp | vllm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-judge-backend">
+<span class="sig-name descname"><span class="pre">--judge-backend</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;judge_backend&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-judge-backend" title="Link to this definition">¶</a></dt>
+<dd><p>Serving backend to use for the judge model for during mt_bench or mt_bench_branch evaluation. Options are vllm and llama-cpp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>llama-cpp | vllm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-tls-insecure">
+<span class="sig-name descname"><span class="pre">--tls-insecure</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-tls-insecure" title="Link to this definition">¶</a></dt>
+<dd><p>Disable TLS verification for model serving.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-tls-client-cert">
+<span class="sig-name descname"><span class="pre">--tls-client-cert</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_cert&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-tls-client-cert" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the TLS client certificate to use for model serving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-tls-client-key">
+<span class="sig-name descname"><span class="pre">--tls-client-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_key&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-tls-client-key" title="Link to this definition">¶</a></dt>
+<dd><p>Path to the TLS client key to use for model serving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-tls-client-passwd">
+<span class="sig-name descname"><span class="pre">--tls-client-passwd</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tls_client_passwd&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-tls-client-passwd" title="Link to this definition">¶</a></dt>
+<dd><p>TLS client certificate password for model serving.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-evaluate-enable-serving-output">
+<span class="sig-name descname"><span class="pre">--enable-serving-output</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-evaluate-enable-serving-output" title="Link to this definition">¶</a></dt>
+<dd><p>Print serving engine logs.</p>
+</dd></dl>
+
+</section>
+<section id="ilab-model-list">
+<h4>list<a class="headerlink" href="#ilab-model-list" title="Link to this heading">¶</a></h4>
+<p>Lists models</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-list-model-dirs">
+<span class="sig-name descname"><span class="pre">--model-dirs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_dirs&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-list-model-dirs" title="Link to this definition">¶</a></dt>
+<dd><p>Base directories where models are stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'/home/runner/.cache/instructlab/models'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-list-list-checkpoints">
+<span class="sig-name descname"><span class="pre">--list-checkpoints</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-list-list-checkpoints" title="Link to this definition">¶</a></dt>
+<dd><p>Also list checkpoints [in addition to existing models].</p>
+</dd></dl>
+
+</section>
+<section id="ilab-model-serve">
+<h4>serve<a class="headerlink" href="#ilab-model-serve" title="Link to this heading">¶</a></h4>
+<p>Starts a local server</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-model-path">
+<span class="sig-name descname"><span class="pre">--model-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-model-path" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-gpu-layers">
+<span class="sig-name descname"><span class="pre">--gpu-layers</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;gpu_layers&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-gpu-layers" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-num-threads">
+<span class="sig-name descname"><span class="pre">--num-threads</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;num_threads&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-num-threads" title="Link to this definition">¶</a></dt>
+<dd><p>The number of CPU threads to use.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-max-ctx-size">
+<span class="sig-name descname"><span class="pre">--max-ctx-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_ctx_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-max-ctx-size" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-model-family">
+<span class="sig-name descname"><span class="pre">--model-family</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_family&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-model-family" title="Link to this definition">¶</a></dt>
+<dd><p>Model family is used to specify which chat template to serve with</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-log-file">
+<span class="sig-name descname"><span class="pre">--log-file</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;log_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-log-file" title="Link to this definition">¶</a></dt>
+<dd><p>Log file path to write server logs to.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-chat-template">
+<span class="sig-name descname"><span class="pre">--chat-template</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;chat_template&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-chat-template" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-backend">
+<span class="sig-name descname"><span class="pre">--backend</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;backend&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-backend" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>llama-cpp | vllm</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-gpus">
+<span class="sig-name descname"><span class="pre">--gpus</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;gpus&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-gpus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-h">
+<span id="cmdoption-ilab-model-serve-host"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--host</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;host&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-h" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-serve-p">
+<span id="cmdoption-ilab-model-serve-port"></span><span class="sig-name descname"><span class="pre">-p</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--port</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;port&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-serve-p" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="ilab-model-test">
+<h4>test<a class="headerlink" href="#ilab-model-test" title="Link to this heading">¶</a></h4>
+<p>Runs basic test to ensure model correctness</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-data-dir">
+<span class="sig-name descname"><span class="pre">--data-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;data_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-data-dir" title="Link to this definition">¶</a></dt>
+<dd><p>Base directory where data is stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'Default</span> <span class="pre">internal</span> <span class="pre">data</span> <span class="pre">directory,</span> <span class="pre">stored</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">instructlab</span> <span class="pre">package.'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-model-dir">
+<span class="sig-name descname"><span class="pre">--model-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-model-dir" title="Link to this definition">¶</a></dt>
+<dd><p>Base directory where model is stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'Default</span> <span class="pre">instructlab</span> <span class="pre">system</span> <span class="pre">checkpoints</span> <span class="pre">directory.'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-adapter-file">
+<span class="sig-name descname"><span class="pre">--adapter-file</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;adapter_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-adapter-file" title="Link to this definition">¶</a></dt>
+<dd><p>LoRA adapter to use for test. Set to ‘None’ to force only testing behavior from before training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'auto'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-m">
+<span id="cmdoption-ilab-model-test-model"></span><span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-m" title="Link to this definition">¶</a></dt>
+<dd><p>Base model name to test on Linux</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;</span> <span class="pre">at</span> <span class="pre">0x7fca5702bf60&gt;</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-t">
+<span id="cmdoption-ilab-model-test-test_file"></span><span class="sig-name descname"><span class="pre">-t</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--test_file</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;test_file&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-t" title="Link to this definition">¶</a></dt>
+<dd><p>Test data file</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-api-key">
+<span class="sig-name descname"><span class="pre">--api-key</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;api_key&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-api-key" title="Link to this definition">¶</a></dt>
+<dd><p>API key for API endpoint. [default: cfg.DEFAULT_API_KEY]</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-test-model-family">
+<span class="sig-name descname"><span class="pre">--model-family</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_family&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-test-model-family" title="Link to this definition">¶</a></dt>
+<dd><p>Force model family to use when picking a generation template</p>
+</dd></dl>
+
+</section>
+<section id="ilab-model-train">
+<h4>train<a class="headerlink" href="#ilab-model-train" title="Link to this heading">¶</a></h4>
+<p>Takes synthetic data generated locally with <cite>ilab data generate</cite> and the previous model and learns a new model using the MLX API.
+On success, writes newly learned model to {model_dir}/mlx_model, which is where <cite>chatmlx</cite> will look for a model.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>train<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-data-path">
+<span class="sig-name descname"><span class="pre">--data-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;data_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-data-path" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-ckpt-output-dir">
+<span class="sig-name descname"><span class="pre">--ckpt-output-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;ckpt_output_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-ckpt-output-dir" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-data-output-dir">
+<span class="sig-name descname"><span class="pre">--data-output-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;data_output_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-data-output-dir" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-input-dir">
+<span class="sig-name descname"><span class="pre">--input-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;input_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-input-dir" title="Link to this definition">¶</a></dt>
+<dd><p>Path to generated files to use as input.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-gguf-model-path">
+<span class="sig-name descname"><span class="pre">--gguf-model-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;gguf_model_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-gguf-model-path" title="Link to this definition">¶</a></dt>
+<dd><p>Local directory where gguf model is stored.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-skip-preprocessing">
+<span class="sig-name descname"><span class="pre">--skip-preprocessing</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-skip-preprocessing" title="Link to this definition">¶</a></dt>
+<dd><p>Skips data preprocessing step for MLX training if data is already cached.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-tokenizer-dir">
+<span class="sig-name descname"><span class="pre">--tokenizer-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;tokenizer_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-tokenizer-dir" title="Link to this definition">¶</a></dt>
+<dd><p>Base directory where tokenizer is stored.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-model-path">
+<span class="sig-name descname"><span class="pre">--model-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-model-path" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-iters">
+<span class="sig-name descname"><span class="pre">--iters</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;iters&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-iters" title="Link to this definition">¶</a></dt>
+<dd><p>Number of iterations to train LoRA.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-local">
+<span class="sig-name descname"><span class="pre">--local</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-local" title="Link to this definition">¶</a></dt>
+<dd><p>Whether or not <cite>model_dir</cite> is remote from HuggingFace.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-sq">
+<span id="cmdoption-ilab-model-train-skip-quantize"></span><span class="sig-name descname"><span class="pre">-sq</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-quantize</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-sq" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to skip quantization while converting to MLX. This parameter will be ignored if –gguf-model-path and –tokenizer-dir are specified.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-num-epochs">
+<span class="sig-name descname"><span class="pre">--num-epochs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;num_epochs&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-num-epochs" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-device">
+<span class="sig-name descname"><span class="pre">--device</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;device&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-device" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>cpu | cuda | hpu | mps</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-max-seq-len">
+<span class="sig-name descname"><span class="pre">--max-seq-len</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_seq_len&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-max-seq-len" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-max-batch-len">
+<span class="sig-name descname"><span class="pre">--max-batch-len</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;max_batch_len&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-max-batch-len" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-effective-batch-size">
+<span class="sig-name descname"><span class="pre">--effective-batch-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;effective_batch_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-effective-batch-size" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-save-samples">
+<span class="sig-name descname"><span class="pre">--save-samples</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;save_samples&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-save-samples" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-learning-rate">
+<span class="sig-name descname"><span class="pre">--learning-rate</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;learning_rate&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-learning-rate" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-warmup-steps">
+<span class="sig-name descname"><span class="pre">--warmup-steps</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;warmup_steps&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-warmup-steps" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-deepspeed-cpu-offload-optimizer">
+<span class="sig-name descname"><span class="pre">--deepspeed-cpu-offload-optimizer</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;deepspeed_cpu_offload_optimizer&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-deepspeed-cpu-offload-optimizer" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-deepspeed-cpu-offload-optimizer-ratio">
+<span class="sig-name descname"><span class="pre">--deepspeed-cpu-offload-optimizer-ratio</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;deepspeed_cpu_offload_optimizer_ratio&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-deepspeed-cpu-offload-optimizer-ratio" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-deepspeed-cpu-offload-optimizer-pin-memory">
+<span class="sig-name descname"><span class="pre">--deepspeed-cpu-offload-optimizer-pin-memory</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;deepspeed_cpu_offload_optimizer_pin_memory&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-deepspeed-cpu-offload-optimizer-pin-memory" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-fsdp-cpu-offload-optimizer">
+<span class="sig-name descname"><span class="pre">--fsdp-cpu-offload-optimizer</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;fsdp_cpu_offload_optimizer&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-fsdp-cpu-offload-optimizer" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-distributed-backend">
+<span class="sig-name descname"><span class="pre">--distributed-backend</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;distributed_backend&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-distributed-backend" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-lora-rank">
+<span class="sig-name descname"><span class="pre">--lora-rank</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lora_rank&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-lora-rank" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-lora-alpha">
+<span class="sig-name descname"><span class="pre">--lora-alpha</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lora_alpha&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-lora-alpha" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-lora-dropout">
+<span class="sig-name descname"><span class="pre">--lora-dropout</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lora_dropout&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-lora-dropout" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-lora-target-modules">
+<span class="sig-name descname"><span class="pre">--lora-target-modules</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lora_target_modules&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-lora-target-modules" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-lora-quantize-dtype">
+<span class="sig-name descname"><span class="pre">--lora-quantize-dtype</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;lora_quantize_dtype&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-lora-quantize-dtype" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-is-padding-free">
+<span class="sig-name descname"><span class="pre">--is-padding-free</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;is_padding_free&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-is-padding-free" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-use-dolomite">
+<span class="sig-name descname"><span class="pre">--use-dolomite</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;use_dolomite&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-use-dolomite" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-gpus">
+<span class="sig-name descname"><span class="pre">--gpus</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nproc_per_node&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-gpus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-nnodes">
+<span class="sig-name descname"><span class="pre">--nnodes</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;nnodes&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-nnodes" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-node-rank">
+<span class="sig-name descname"><span class="pre">--node-rank</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;node_rank&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-node-rank" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-rdzv-id">
+<span class="sig-name descname"><span class="pre">--rdzv-id</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;rdzv_id&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-rdzv-id" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-rdzv-endpoint">
+<span class="sig-name descname"><span class="pre">--rdzv-endpoint</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;rdzv_endpoint&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-rdzv-endpoint" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong></p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-disable-flash-attn">
+<span class="sig-name descname"><span class="pre">--disable-flash-attn</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-disable-flash-attn" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-strategy">
+<span class="sig-name descname"><span class="pre">--strategy</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;strategy&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-strategy" title="Link to this definition">¶</a></dt>
+<dd><p>If chosen, will run the selected training strategy instead of a single training run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>lab-multiphase | lab-skills-only</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-base-dir">
+<span class="sig-name descname"><span class="pre">--phased-base-dir</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_base_dir&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-base-dir" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase1-data">
+<span class="sig-name descname"><span class="pre">--phased-phase1-data</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase1_data&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase1-data" title="Link to this definition">¶</a></dt>
+<dd><p>Path to .jsonl file that will be used for the first phase of end-to-end training.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase1-num-epochs">
+<span class="sig-name descname"><span class="pre">--phased-phase1-num-epochs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase1_num_epochs&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase1-num-epochs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase1-samples-per-save">
+<span class="sig-name descname"><span class="pre">--phased-phase1-samples-per-save</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase1_samples_per_save&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase1-samples-per-save" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase1-learning-rate">
+<span class="sig-name descname"><span class="pre">--phased-phase1-learning-rate</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase1_learning_rate&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase1-learning-rate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase1-effective-batch-size">
+<span class="sig-name descname"><span class="pre">--phased-phase1-effective-batch-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase1_effective_batch_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase1-effective-batch-size" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase2-data">
+<span class="sig-name descname"><span class="pre">--phased-phase2-data</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase2_data&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase2-data" title="Link to this definition">¶</a></dt>
+<dd><p>Path to .jsonl file that will be used for the second phase of end-to-end training.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase2-num-epochs">
+<span class="sig-name descname"><span class="pre">--phased-phase2-num-epochs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase2_num_epochs&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase2-num-epochs" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase2-samples-per-save">
+<span class="sig-name descname"><span class="pre">--phased-phase2-samples-per-save</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase2_samples_per_save&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase2-samples-per-save" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase2-learning-rate">
+<span class="sig-name descname"><span class="pre">--phased-phase2-learning-rate</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase2_learning_rate&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase2-learning-rate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-phase2-effective-batch-size">
+<span class="sig-name descname"><span class="pre">--phased-phase2-effective-batch-size</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_phase2_effective_batch_size&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-phase2-effective-batch-size" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-phased-mt-bench-judge">
+<span class="sig-name descname"><span class="pre">--phased-mt-bench-judge</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;phased_mt_bench_judge&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-phased-mt-bench-judge" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-y">
+<span id="cmdoption-ilab-model-train-skip-user-confirm"></span><span class="sig-name descname"><span class="pre">-y</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--skip-user-confirm</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-y" title="Link to this definition">¶</a></dt>
+<dd><p>Skips any user confirmation prompts.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-enable-serving-output">
+<span class="sig-name descname"><span class="pre">--enable-serving-output</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-enable-serving-output" title="Link to this definition">¶</a></dt>
+<dd><p>Print serving engine logs during phased training checkpoint evaluation.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-checkpoint-at-epoch">
+<span class="sig-name descname"><span class="pre">--checkpoint-at-epoch</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-checkpoint-at-epoch" title="Link to this definition">¶</a></dt>
+<dd><p>By default, checkpoints are saved at the end of each training epoch. This option disables this behavior.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-pipeline">
+<span class="sig-name descname"><span class="pre">--pipeline</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;pipeline&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-pipeline" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>simple | full | accelerated</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-training-journal">
+<span class="sig-name descname"><span class="pre">--training-journal</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;training_journal&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-train-training-journal" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-force-clear-phased-cache">
+<span class="sig-name descname"><span class="pre">--force-clear-phased-cache</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-force-clear-phased-cache" title="Link to this definition">¶</a></dt>
+<dd><p>Clear phased cache (journal, checkpoints, metadata). Helpful paired with ‘–skip-user-confirm’</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-train-optimize-memory">
+<span class="sig-name descname"><span class="pre">--optimize-memory</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-model-train-optimize-memory" title="Link to this definition">¶</a></dt>
+<dd><p>Optimize Memory Usage on CPU and MacOS. This uses the torch_dtype=’auto’ instead of float32</p>
+</dd></dl>
+
+</section>
+<section id="ilab-model-upload">
+<h4>upload<a class="headerlink" href="#ilab-model-upload" title="Link to this heading">¶</a></h4>
+<p>Uploads model to a specified location</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>upload<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-upload-m">
+<span id="cmdoption-ilab-model-upload-model"></span><span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--model</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;model&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-upload-m" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong> Path to the model to upload or name of an existing checkpoint.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-upload-dest-type">
+<span class="sig-name descname"><span class="pre">--dest-type</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;dest_type&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-upload-dest-type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of destination to upload to - can be ‘hf’, ‘oci’, or ‘s3’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Options<span class="colon">:</span></dt>
+<dd class="field-odd"><p>oci | s3 | hf</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-upload-d">
+<span id="cmdoption-ilab-model-upload-destination"></span><span class="sig-name descname"><span class="pre">-d</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--destination</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;destination&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-upload-d" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Required</strong> Destination for the model to be uploaded to. Ex: for a Hugging Face repo, should be ‘&lt;username&gt;/&lt;repo-name&gt;’</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-upload-rl">
+<span id="cmdoption-ilab-model-upload-release"></span><span class="sig-name descname"><span class="pre">-rl</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--release</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;release&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-upload-rl" title="Link to this definition">¶</a></dt>
+<dd><p>The revision to upload the model to - e.g. a branch for Hugging Face repositories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'main'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-model-upload-hf-token">
+<span class="sig-name descname"><span class="pre">--hf-token</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;hf_token&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-model-upload-hf-token" title="Link to this definition">¶</a></dt>
+<dd><p>User access token for connecting to the Hugging Face Hub.</p>
+</dd></dl>
+
+<p class="rubric">Environment variables</p>
+<dl class="std envvar" id="ilab-model-upload-hf-token-hf-token">
+<dt class="sig sig-object std">
+<span class="sig-name descname"><span class="pre">HF_TOKEN</span></span></dt>
+<dd><blockquote>
+<div><p>Provide a default for <a class="reference internal" href="#cmdoption-ilab-model-upload-hf-token"><code class="xref std std-option docutils literal notranslate"><span class="pre">--hf-token</span></code></a></p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+<section id="ilab-system">
+<h3>system<a class="headerlink" href="#ilab-system" title="Link to this heading">¶</a></h3>
+<p>Command group for all system-related command calls</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>system<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="ilab-system-info">
+<h4>info<a class="headerlink" href="#ilab-system-info" title="Link to this heading">¶</a></h4>
+<p>Print system information</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>system<span class="w"> </span>info<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ilab-taxonomy">
+<h3>taxonomy<a class="headerlink" href="#ilab-taxonomy" title="Link to this heading">¶</a></h3>
+<p>Command Group for Interacting with the Taxonomy of InstructLab.</p>
+<p>If this is your first time running ilab, it’s best to start with <cite>ilab config init</cite> to create the environment.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>taxonomy<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span><span class="w"> </span>COMMAND<span class="w"> </span><span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<section id="ilab-taxonomy-diff">
+<h4>diff<a class="headerlink" href="#ilab-taxonomy-diff" title="Link to this heading">¶</a></h4>
+<p>Lists taxonomy files that have changed since &lt;taxonomy-base&gt;
+and checks that taxonomy is valid. Similar to ‘git diff &lt;ref&gt;’.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>taxonomy<span class="w"> </span>diff<span class="w"> </span><span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-taxonomy-diff-taxonomy-path">
+<span class="sig-name descname"><span class="pre">--taxonomy-path</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_path&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-taxonomy-diff-taxonomy-path" title="Link to this definition">¶</a></dt>
+<dd><p>Path to where the taxonomy is stored locally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">'Default</span> <span class="pre">taxonomy</span> <span class="pre">location</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">instructlab</span> <span class="pre">data</span> <span class="pre">directory.'</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-taxonomy-diff-taxonomy-base">
+<span class="sig-name descname"><span class="pre">--taxonomy-base</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;taxonomy_base&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-taxonomy-diff-taxonomy-base" title="Link to this definition">¶</a></dt>
+<dd><p>Base git-ref to use for taxonomy, use ‘empty’ for the entire repo contents.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-taxonomy-diff-yaml-rules">
+<span class="sig-name descname"><span class="pre">--yaml-rules</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;yaml_rules&gt;</span></span><a class="headerlink" href="#cmdoption-ilab-taxonomy-diff-yaml-rules" title="Link to this definition">¶</a></dt>
+<dd><p>Custom rules file for YAML linting.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-ilab-taxonomy-diff-quiet">
+<span class="sig-name descname"><span class="pre">--quiet</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-ilab-taxonomy-diff-quiet" title="Link to this definition">¶</a></dt>
+<dd><p>Suppress all output. Call returns 0 if check passes, 1 otherwise.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="config.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">CLI Configuration</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, InstructLab Authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">CLI Reference</a><ul>
+<li><a class="reference internal" href="#ilab">ilab</a><ul>
+<li><a class="reference internal" href="#ilab-config">config</a><ul>
+<li><a class="reference internal" href="#ilab-config-edit">edit</a></li>
+<li><a class="reference internal" href="#ilab-config-init">init</a></li>
+<li><a class="reference internal" href="#ilab-config-show">show</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ilab-data">data</a><ul>
+<li><a class="reference internal" href="#ilab-data-generate">generate</a></li>
+<li><a class="reference internal" href="#ilab-data-list">list</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ilab-model">model</a><ul>
+<li><a class="reference internal" href="#ilab-model-chat">chat</a></li>
+<li><a class="reference internal" href="#ilab-model-convert">convert</a></li>
+<li><a class="reference internal" href="#ilab-model-download">download</a></li>
+<li><a class="reference internal" href="#ilab-model-evaluate">evaluate</a></li>
+<li><a class="reference internal" href="#ilab-model-list">list</a></li>
+<li><a class="reference internal" href="#ilab-model-serve">serve</a></li>
+<li><a class="reference internal" href="#ilab-model-test">test</a></li>
+<li><a class="reference internal" href="#ilab-model-train">train</a></li>
+<li><a class="reference internal" href="#ilab-model-upload">upload</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ilab-system">system</a><ul>
+<li><a class="reference internal" href="#ilab-system-info">info</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ilab-taxonomy">taxonomy</a><ul>
+<li><a class="reference internal" href="#ilab-taxonomy-diff">diff</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>

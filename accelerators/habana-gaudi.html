@@ -1,0 +1,551 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="InstructLab toolbox container for AMD ROCm GPUs" href="amd-rocm.html" /><link rel="prev" title="Accelerators" href="index.html" />
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
+        <title>Intel Gaudi / Habana Labs HPU with SynapseAI - InstructLab documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">InstructLab  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">InstructLab  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ilab.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">CLI Configuration</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user/index.html">Helpful User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Helpful User Guides</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user/PROMPTING-FAQ.html">Prompting FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/instructlab_models.html">InstructLab LLM guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/converting_GGUF.html">Optional: Converting a Model to GGUF and Quantizing</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Accelerators</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Accelerators</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Intel Gaudi / Habana Labs HPU with SynapseAI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="amd-rocm.html">InstructLab toolbox container for AMD ROCm GPUs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gpu-acceleration.html">🏎️ Making <code class="docutils literal notranslate"><span class="pre">ilab</span></code> go fast</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../maintainers/index.html">Maintainer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Maintainer Documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../maintainers/ci.html">CI for InstructLab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../maintainers/release-strategy.html">InstructLab CLI Release Strategy</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/accelerators/habana-gaudi.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="intel-gaudi-habana-labs-hpu-with-synapseai">
+<h1>Intel Gaudi / Habana Labs HPU with SynapseAI<a class="headerlink" href="#intel-gaudi-habana-labs-hpu-with-synapseai" title="Link to this heading">¶</a></h1>
+<blockquote>
+<div><p><strong>WARNING</strong> Intel Gaudi support is currently under development and not ready for production.</p>
+<p><strong>NOTE</strong> These instructions install <code class="docutils literal notranslate"><span class="pre">llama-cpp-python</span></code> for CPU. Inference in <code class="docutils literal notranslate"><span class="pre">ilab</span> <span class="pre">model</span> <span class="pre">chat</span></code>, <code class="docutils literal notranslate"><span class="pre">ilab</span> <span class="pre">model</span> <span class="pre">serve</span></code>, and <code class="docutils literal notranslate"><span class="pre">ilab</span> <span class="pre">data</span> <span class="pre">generate</span></code> is not using hardware acceleration.</p>
+</div></blockquote>
+<section id="system-requirements">
+<h2>System requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>RHEL 9 on <code class="docutils literal notranslate"><span class="pre">x86_64</span></code> (tested with RHEL 9.4)</p></li>
+<li><p>Intel Gaudi 2 device</p></li>
+<li><p><a class="reference external" href="https://docs.habana.ai/en/latest/index.html">Habana Labs</a> software stack (tested with 1.18.0)</p></li>
+<li><p>software from Habana Vault for <a class="reference external" href="https://vault.habana.ai/ui/native/rhel">RHEL</a> and <a class="reference external" href="https://vault.habana.ai/ui/native/gaudi-pt-modules">PyTorch</a></p></li>
+<li><p>software <a class="reference external" href="https://github.com/HabanaAI/">HabanaAI GitHub</a> org like <a class="reference external" href="https://github.com/HabanaAI/optimum-habana-fork">optimum-habana</a> fork</p></li>
+</ul>
+</section>
+<section id="system-preparation">
+<h2>System preparation<a class="headerlink" href="#system-preparation" title="Link to this heading">¶</a></h2>
+<section id="kernel-modules-firmware-firmware-tools">
+<h3>Kernel modules, firmware, firmware tools<a class="headerlink" href="#kernel-modules-firmware-firmware-tools" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Enable CRB and EPEL repositories</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>subscription-manager<span class="w"> </span>repos<span class="w"> </span>--enable<span class="w"> </span>codeready-builder-for-rhel-9-<span class="k">$(</span>arch<span class="k">)</span>-rpms
+sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Add Habana Vault repository <code class="docutils literal notranslate"><span class="pre">/etc/yum.repos.d/Habana-Vault.repo</span></code></p></li>
+</ol>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[vault]</span>
+<span class="na">name</span><span class="o">=</span><span class="s">Habana Vault</span>
+<span class="na">baseurl</span><span class="o">=</span><span class="s">https://vault.habana.ai/artifactory/rhel/9/9.4</span>
+<span class="na">enabled</span><span class="o">=</span><span class="s">1</span>
+<span class="na">gpgcheck</span><span class="o">=</span><span class="s">1</span>
+<span class="na">repo_gpgcheck</span><span class="o">=</span><span class="s">0</span>
+<span class="na">gpgkey</span><span class="o">=</span><span class="s">https://vault.habana.ai/artifactory/api/v2/repositories/rhel/keyPairs/primary/public</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Install firmware and tools</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>habanalabs-firmware<span class="w"> </span>habanalabs-firmware-odm<span class="w"> </span>habanalabs-firmware-tools<span class="w"> </span>habanalabs-rdma-core<span class="w"> </span>habanalabs-graph<span class="w"> </span>habanalabs-thunk
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Install Kernel drivers. This will build and install several Kernel modules with DKMS</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>habanalabs
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Load Kernel drivers</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>modprobe<span class="w"> </span>habanalabs_en<span class="w"> </span>habanalabs_cn<span class="w"> </span>habanalabs
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Check journald for device</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>journalctl<span class="w"> </span>-o<span class="w"> </span>cat<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>habanalabs
+habanalabs_en:<span class="w"> </span>loading<span class="w"> </span>driver,<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.18.0-95323a5
+habanalabs_ib:<span class="w"> </span>loading<span class="w"> </span>driver,<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.18.0-95323a5
+habanalabs_cn:<span class="w"> </span>loading<span class="w"> </span>driver,<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.18.0-95323a5
+habanalabs:<span class="w"> </span>loading<span class="w"> </span>driver,<span class="w"> </span>version:<span class="w"> </span><span class="m">1</span>.18.0-ee698fb
+habanalabs<span class="w"> </span><span class="m">0000</span>:21:00.0:<span class="w"> </span>habanalabs<span class="w"> </span>device<span class="w"> </span>found<span class="w"> </span><span class="o">[</span>1da3:1060<span class="o">]</span><span class="w"> </span><span class="o">(</span>rev<span class="w"> </span><span class="m">1</span><span class="o">)</span>
+...
+habanalabs<span class="w"> </span><span class="m">0000</span>:21:00.0<span class="w"> </span>hbl_0:<span class="w"> </span>IB<span class="w"> </span>device<span class="w"> </span>registered
+accel<span class="w"> </span>accel0:<span class="w"> </span>Successfully<span class="w"> </span>added<span class="w"> </span>device<span class="w"> </span><span class="m">0000</span>:21:00.0<span class="w"> </span>to<span class="w"> </span>habanalabs<span class="w"> </span>driver
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">hl-smi</span></code></p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>hl-smi
++-----------------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>HL-SMI<span class="w"> </span>Version:<span class="w">                              </span>hl-1.18.0-fw-53.1.1.1<span class="w">          </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>Driver<span class="w"> </span>Version:<span class="w">                                     </span><span class="m">1</span>.18.0-ee698fb<span class="w">          </span><span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+<span class="p">|</span><span class="w"> </span>AIP<span class="w">  </span>Name<span class="w">        </span>Persistence-M<span class="p">|</span><span class="w"> </span>Bus-Id<span class="w">        </span>Disp.A<span class="w"> </span><span class="p">|</span><span class="w"> </span>Volatile<span class="w"> </span>Uncorr.<span class="w"> </span>ECC<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>Fan<span class="w">  </span>Temp<span class="w">  </span>Perf<span class="w">  </span>Pwr:Usage/Cap<span class="p">|</span><span class="w">         </span>Memory-Usage<span class="w"> </span><span class="p">|</span><span class="w"> </span>AIP-Util<span class="w">  </span>Compute<span class="w"> </span>M.<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span><span class="w">   </span><span class="m">0</span><span class="w">  </span>HL-325<span class="w">              </span>N/A<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">0000</span>:21:00.0<span class="w">     </span>N/A<span class="w"> </span><span class="p">|</span><span class="w">                   </span><span class="m">0</span><span class="w">  </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>N/A<span class="w">   </span>43C<span class="w">   </span>N/A<span class="w">   </span>264W<span class="w"> </span>/<span class="w"> </span>900W<span class="w"> </span><span class="p">|</span><span class="w">    </span>672MiB<span class="w"> </span>/<span class="w"> </span>131072MiB<span class="w"> </span><span class="p">|</span><span class="w">     </span><span class="m">0</span>%<span class="w">           </span>N/A<span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://docs.habana.ai/en/latest/shared/Install_Driver_and_Firmware.html">Intel Gaudi SW Stack for RHEL 9.4</a>
+for detailed documentation.</p>
+</section>
+</section>
+<section id="other-tools">
+<h2>Other tools<a class="headerlink" href="#other-tools" title="Link to this heading">¶</a></h2>
+<p>The Habana Vault repository provides several other tools, e.g. OCI container runtime hooks.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>dnf<span class="w"> </span>install<span class="w"> </span>habanalabs-container-runtime
+</pre></div>
+</div>
+</section>
+<section id="install-python-intel-onemkl-and-pytorch-stack">
+<h2>Install Python, Intel oneMKL, and PyTorch stack<a class="headerlink" href="#install-python-intel-onemkl-and-pytorch-stack" title="Link to this heading">¶</a></h2>
+<p>Retrieve installer script</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-O<span class="w"> </span>https://vault.habana.ai/artifactory/gaudi-installer/1.18.0/habanalabs-installer.sh
+chmod<span class="w"> </span>+x<span class="w"> </span>habanalabs-installer.sh
+</pre></div>
+</div>
+<p>Install dependencies (use <code class="docutils literal notranslate"><span class="pre">--verbose</span></code> for verbose logging). This will install several RPM packages, download Intel compilers + libraries, and more.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">MAKEFLAGS</span><span class="o">=</span><span class="s2">&quot;-j</span><span class="k">$(</span>nproc<span class="k">)</span><span class="s2">&quot;</span>
+./habanalabs-installer.sh<span class="w"> </span>install<span class="w"> </span>--type<span class="w"> </span>dependencies<span class="w"> </span>--skip-install-firmware
+</pre></div>
+</div>
+<p>Install PyTorch with Habana Labs framework in a virtual environment:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">HABANALABS_VIRTUAL_DIR</span><span class="o">=</span><span class="nv">$HOME</span>/habanalabs-venv
+./habanalabs-installer.sh<span class="w"> </span>install<span class="w"> </span>--type<span class="w"> </span>pytorch<span class="w"> </span>--venv
+</pre></div>
+</div>
+<p>Validate installation:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./habanalabs-installer.sh<span class="w"> </span>validate
+</pre></div>
+</div>
+</section>
+<section id="habana-lab-s-pytorch-stack">
+<h2>Habana Lab’s PyTorch stack<a class="headerlink" href="#habana-lab-s-pytorch-stack" title="Link to this heading">¶</a></h2>
+<p>Habana Labs comes with a modified fork of PyTorch that is build with Intel’s oneAPI Math Kernel Library (oneMKL). The actual HPU bindings and helpers are provided by the <code class="docutils literal notranslate"><span class="pre">habana_framework</span></code> package. Imports of <code class="docutils literal notranslate"><span class="pre">habana_framework</span></code> sub-packages register <code class="docutils literal notranslate"><span class="pre">hpu</span></code> device support, <code class="docutils literal notranslate"><span class="pre">torch.hpu</span></code> module, and <code class="docutils literal notranslate"><span class="pre">dynamo</span></code> backends.</p>
+<p>The <a class="reference external" href="https://huggingface.co/docs/trl/sft_trainer"><code class="docutils literal notranslate"><span class="pre">SFTTrainer</span></code></a> from <code class="docutils literal notranslate"><span class="pre">trl</span></code> does not work with Habana stack. Instead the <code class="docutils literal notranslate"><span class="pre">GaudiSFTTrainer</span></code> from <a class="reference external" href="https://huggingface.co/docs/optimum/habana/index">optimum-habana</a> is needed. The version on PyPI is currently broken, but the HabanaAI <a class="reference external" href="https://github.com/HabanaAI/optimum-habana-fork">optimum-habana-fork</a> works.</p>
+</section>
+<section id="install-and-run-instructlab-with-intel-gaudi">
+<h2>Install and run InstructLab with Intel Gaudi<a class="headerlink" href="#install-and-run-instructlab-with-intel-gaudi" title="Link to this heading">¶</a></h2>
+<p>Install <code class="docutils literal notranslate"><span class="pre">InstructLab</span></code> from checkout with additional dependencies:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>.<span class="w"> </span><span class="nv">$HABANALABS_VIRTUAL_DIR</span>/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>./instructlab<span class="o">[</span>hpu<span class="o">]</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>TIP</strong> If <code class="docutils literal notranslate"><span class="pre">llama-cpp-python</span></code> fails to build with error <code class="docutils literal notranslate"><span class="pre">unsupported</span> <span class="pre">instruction</span> <span class="pre">`vpdpbusd'</span></code>, then install with <code class="docutils literal notranslate"><span class="pre">CFLAGS=&quot;-mno-avx&quot;</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">...</span></code>.</p>
+</div></blockquote>
+<p>Train environment (see <a class="reference external" href="https://docs.habana.ai/en/latest/PyTorch/Reference/Runtime_Flags.html">Habana runtime environment variables</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># environment variables for training</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">TCMALLOC_LARGE_ALLOC_REPORT_THRESHOLD</span><span class="o">=</span><span class="m">7516192768</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">LD_PRELOAD</span><span class="o">=</span>/lib64/libtcmalloc.so
+
+<span class="c1"># work around race condition on systems with lots of cores</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">OMP_NUM_THREADS</span><span class="o">=</span><span class="m">16</span>
+
+<span class="c1"># Gaudi configuration</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PT_HPU_LAZY_MODE</span><span class="o">=</span><span class="m">0</span>
+
+<span class="c1"># additional environment variables for debugging</span>
+<span class="c1">#export ENABLE_CONSOLE=true</span>
+<span class="c1">#export LOG_LEVEL_ALL=5</span>
+<span class="c1">#export LOG_LEVEL_PT_FALLBACK=1</span>
+</pre></div>
+</div>
+<p>Train on HPU</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ilab<span class="w"> </span>model<span class="w"> </span>train<span class="w"> </span>--device<span class="o">=</span>hpu
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">LINUX_TRAIN.PY: Using device &#39;hpu&#39;</span>
+<span class="go">============================= HABANA PT BRIDGE CONFIGURATION ===========================</span>
+<span class="go"> PT_HPU_LAZY_MODE = 0</span>
+<span class="go"> PT_RECIPE_CACHE_PATH =</span>
+<span class="go"> PT_CACHE_FOLDER_DELETE = 0</span>
+<span class="go"> PT_HPU_RECIPE_CACHE_CONFIG = </span>
+<span class="go"> PT_HPU_MAX_COMPOUND_OP_SIZE = 9223372036854775807</span>
+<span class="go"> PT_HPU_LAZY_ACC_PAR_MODE = 1</span>
+<span class="go"> PT_HPU_ENABLE_REFINE_DYNAMIC_SHAPES = 0</span>
+<span class="go"> PT_HPU_EAGER_PIPELINE_ENABLE = 1</span>
+<span class="go"> PT_HPU_EAGER_COLLECTIVE_PIPELINE_ENABLE = 1</span>
+<span class="go">---------------------------: System Configuration :---------------------------</span>
+<span class="go">Num CPU Cores : 224</span>
+<span class="go">CPU RAM       : 1055745600 KB</span>
+<span class="go">------------------------------------------------------------------------------</span>
+<span class="go">Device count: 8</span>
+<span class="go">  hpu:0 is &#39;GAUDI3&#39;, cap: 1.18.0.1b7f293 (sramBaseAddress=144396662951903232, dramBaseAddress=144396800491520000, sramSize=0, dramSize=136465870848, tpcEnabledMask=18446744073709551615, dramEnabled=1, fd=17, device_id=0, device_type=5)</span>
+<span class="go">PT and Habana Environment variables</span>
+<span class="go">  HABANALABS_HLTHUNK_TESTS_BIN_PATH=&quot;/opt/habanalabs/src/hl-thunk/tests/arc&quot;</span>
+<span class="go">  HABANA_LOGS=&quot;/var/log/habana_logs/&quot;</span>
+<span class="go">  HABANA_PLUGINS_LIB_PATH=&quot;/usr/lib/habanatools/habana_plugins&quot;</span>
+<span class="go">  HABANA_PROFILE=&quot;profile_api_light&quot;</span>
+<span class="go">  HABANA_SCAL_BIN_PATH=&quot;/opt/habanalabs/engines_fw&quot;</span>
+<span class="go">  PT_HPU_LAZY_MODE=&quot;0&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="container">
+<h2>Container<a class="headerlink" href="#container" title="Link to this heading">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>podman
+sudo<span class="w"> </span>setsebool<span class="w"> </span>-P<span class="w"> </span><span class="nv">container_use_devices</span><span class="o">=</span><span class="nb">true</span>
+make<span class="w"> </span>hpu
+podman<span class="w"> </span>run<span class="w"> </span>-ti<span class="w"> </span>--device<span class="o">=</span>/dev/accel/<span class="w"> </span>--device<span class="o">=</span>/dev/infiniband/<span class="w"> </span>-v<span class="w"> </span>./data:/opt/app-root/src:z<span class="w"> </span>localhost/instructlab:hpu
+</pre></div>
+</div>
+</section>
+<section id="known-issues-and-limitations">
+<h2>Known issues and limitations<a class="headerlink" href="#known-issues-and-limitations" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Training is limited to a single device, no DistributedDataParallel, yet.</p></li>
+<li><p>On systems with lots of CPU cores, training sometimes crashes with a segfault right after “loading the base model”. The back trace suggests a race condition in <code class="docutils literal notranslate"><span class="pre">libgomp</span></code> or oneMKL. Use the environment variable <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS</span></code> to reduce <code class="docutils literal notranslate"><span class="pre">OMP</span></code>’s threads, e.g. <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS=1</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">habana-container-hook</span></code> can cause <code class="docutils literal notranslate"><span class="pre">podman</span> <span class="pre">build</span></code> to fail.</p></li>
+<li><p>Training parameters are not optimized and verified for best results.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llama-cpp</span></code> has no hardware acceleration backend for HPUs. Inference (<code class="docutils literal notranslate"><span class="pre">ilab</span> <span class="pre">data</span> <span class="pre">generate</span></code> and <code class="docutils literal notranslate"><span class="pre">ilab</span> <span class="pre">model</span> <span class="pre">chat</span></code>) is slow and CPU bound.</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="amd-rocm.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">InstructLab toolbox container for AMD ROCm GPUs</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Accelerators</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, InstructLab Authors
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Intel Gaudi / Habana Labs HPU with SynapseAI</a><ul>
+<li><a class="reference internal" href="#system-requirements">System requirements</a></li>
+<li><a class="reference internal" href="#system-preparation">System preparation</a><ul>
+<li><a class="reference internal" href="#kernel-modules-firmware-firmware-tools">Kernel modules, firmware, firmware tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-tools">Other tools</a></li>
+<li><a class="reference internal" href="#install-python-intel-onemkl-and-pytorch-stack">Install Python, Intel oneMKL, and PyTorch stack</a></li>
+<li><a class="reference internal" href="#habana-lab-s-pytorch-stack">Habana Lab’s PyTorch stack</a></li>
+<li><a class="reference internal" href="#install-and-run-instructlab-with-intel-gaudi">Install and run InstructLab with Intel Gaudi</a></li>
+<li><a class="reference internal" href="#container">Container</a></li>
+<li><a class="reference internal" href="#known-issues-and-limitations">Known issues and limitations</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
+</html>
