@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
-name: Lint Markdown documents
+name: Build Docs Website
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
     paths:
       - '**/*.md'
       - '.markdownlint-cli2.yaml'
-      - '.github/workflows/docs.yml' # This workflow
+      - '.github/workflows/build-docs.yml' # This workflow
   pull_request:
     branches:
       - "main"
@@ -18,7 +18,7 @@ on:
     paths:
       - '**/*.md'
       - '.markdownlint-cli2.yaml'
-      - '.github/workflows/docs.yml' # This workflow
+      - '.github/workflows/build-docs.yml' # This workflow
 
 env:
   LC_ALL: en_US.UTF-8
