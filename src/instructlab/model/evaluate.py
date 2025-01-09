@@ -17,6 +17,8 @@ from instructlab import clickext
 from instructlab.configuration import _serve
 from instructlab.model.backends import backends
 from instructlab.utils import get_model_arch, get_sysprompt
+from instructlab import client_utils
+import instructlab.eval.ragas as ragas_eval
 
 # Local
 from ..client_utils import http_client
@@ -31,7 +33,7 @@ class Benchmark(str, enum.Enum):
     MMLU_BRANCH = "mmlu_branch"
     MT_BENCH = "mt_bench"
     MT_BENCH_BRANCH = "mt_bench_branch"
-
+    DK_BENCH = "dk_bench"
 
 def validate_options(
     model,
@@ -46,6 +48,7 @@ def validate_options(
     few_shots,
     batch_size,
     tasks_dir,
+    input_questions,
 ):
     """takes in arguments from the CLI and uses 'benchmark' to validate other arguments
     if all needed configuration is present, raises an exception for the missing values
@@ -113,6 +116,16 @@ def validate_options(
         validate_model(model, allow_gguf=False)
         if benchmark == Benchmark.MMLU_BRANCH:
             validate_model(base_model, "--base-model", allow_gguf=False)
+
+    if benchmark == Benchmark.DK_BENCH:
+        required_args = [input_questions]
+        required_arg_names = ["--input-questions"]
+        if None in required_args:
+            click.secho(
+                f"Benchmark {benchmark} requires the following flags to be set: {required_arg_names}",
+                fg="red",
+            )
+            raise click.exceptions.Exit(1)
 
 
 def validate_model(model: str, model_arg: str = "--model", allow_gguf: bool = True):
@@ -516,6 +529,43 @@ def launch_server(
     is_flag=True,
     help="Print serving engine logs.",
 )
+@click.option(
+    "--input-questions",
+    type=click.Path(exists=True, path_type=pathlib.Path),
+    default=None,
+    help="Path to the questions and reference answers the model will be evaluating in the DK-Bench evaluation",
+)
+@click.option(
+    "--output-file-formats",
+    type=click.STRING,
+    default="jsonl",
+    show_default=True,
+    help="Comma-separated list of file formats for results of the DK-Bench evaluation. Valid options are csv, jsonl, and xlsx. If this option is not provided the results are written as a .jsonl file",
+)
+@click.option(
+    "--model-prompt",
+    type=click.STRING,
+    default=ragas_eval.DEFAULT_SYSTEM_PROMPT,
+    help="Prompt for the model when getting responses in the DK-Bench evaluation",
+)
+@click.option(
+    "--temperature",
+    type=click.FLOAT,
+    default=0.0,
+    help="Temperature for the model when getting responses in the DK-Bench evaluation",
+)
+@click.option(
+    "--dk-bench-model",
+    type=click.STRING,
+    default=None,
+    help="Model to evaluate for the DK-Bench evaluation",
+)
+@click.option(
+    "--judge-model-name",
+    type=click.STRING,
+    default=ragas_eval.DEFAULT_JUDGE_MODEL,
+    help="Prompt for the model when getting responses in the DK-Bench evaluation",
+)
 @click.pass_context
 @clickext.display_params
 def evaluate(
@@ -541,6 +591,12 @@ def evaluate(
     tls_client_key,  # pylint: disable=unused-argument
     tls_client_passwd,  # pylint: disable=unused-argument
     enable_serving_output,
+    input_questions,
+    output_file_formats,
+    model_prompt,
+    temperature,
+    dk_bench_model,
+    judge_model_name,
 ):
     """Evaluates a trained model"""
 
@@ -567,7 +623,36 @@ def evaluate(
             few_shots,
             batch_size,
             tasks_dir,
+            input_questions,
         )
+
+        if benchmark == Benchmark.DK_BENCH:
+
+            from instructlab.model.dk_bench_utils import run_dk_bench, print_header, print_results, write_results, make_run_dir
+
+            # turn output_file_formats into a list to be passed into write_results
+            if output_file_formats is not None:
+                output_file_formats = output_file_formats.split(",")
+
+            result, model_name = run_dk_bench(ctx,
+                       dk_bench_model,
+                       max_workers,
+                       gpus, backend,
+                       enable_serving_output,
+                       input_questions,
+                       output_dir,
+                       model_prompt,
+                       temperature,
+                       judge_model_name)
+
+            print_header()
+            output_dir = make_run_dir(output_dir)
+            print_results(result, model_name)
+            write_results(result, output_file_formats, output_dir, model_name)
+
+            print('\n')
+            click.echo("ᕦ(òᴗóˇ)ᕤ Model evaluate with DK-Bench completed! ᕦ(òᴗóˇ)ᕤ")
+
 
         if benchmark == Benchmark.MT_BENCH:
             # Third Party
