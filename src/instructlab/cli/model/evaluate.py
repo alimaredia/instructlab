@@ -3,9 +3,11 @@
 # pylint: disable=ungrouped-imports
 # Standard
 import logging
+import pathlib
 
 # Third Party
 import click
+import instructlab.eval.ragas as ragas_eval
 
 # First Party
 from instructlab import clickext
@@ -135,6 +137,43 @@ logger = logging.getLogger(__name__)
     is_flag=True,
     help="Print serving engine logs.",
 )
+@click.option(
+    "--input-questions",
+    type=click.Path(exists=True, path_type=pathlib.Path),
+    default=None,
+    help="Path to the questions and reference answers the model will be evaluating in the DK-Bench evaluation",
+)
+@click.option(
+    "--output-file-formats",
+    type=click.STRING,
+    default="jsonl",
+    show_default=True,
+    help="Comma-separated list of file formats for results of the DK-Bench evaluation. Valid options are csv, jsonl, and xlsx. If this option is not provided the results are written as a .jsonl file",
+)
+@click.option(
+    "--system-prompt",
+    type=click.STRING,
+    default=ragas_eval._DEFAULT_SYSTEM_PROMPT,
+    help="Prompt for the model when getting responses in the DK-Bench evaluation",
+)
+@click.option(
+    "--temperature",
+    type=click.FLOAT,
+    default=0.0,
+    help="Temperature for the model when getting responses in the DK-Bench evaluation",
+)
+@click.option(
+    "--model-name",
+    type=click.STRING,
+    default=None,
+    help="Model name of model getting responses and being evaluated in the DK-Bench evaluation",
+)
+@click.option(
+    "--judge-model-name",
+    type=click.STRING,
+    default="gpt-4o",
+    help="Name of judge model doing evaluation in the DK-Bench evaluation. Judge model name must be an OpenAI model",
+)
 @click.pass_context
 @clickext.display_params
 def evaluate(
@@ -160,6 +199,12 @@ def evaluate(
     tls_client_key,  # pylint: disable=unused-argument
     tls_client_passwd,  # pylint: disable=unused-argument
     enable_serving_output,
+    input_questions,
+    output_file_formats,
+    system_prompt,
+    temperature,
+    model_name,
+    judge_model_name,
 ) -> None:
     """Evaluates a trained model"""
     try:
@@ -186,6 +231,12 @@ def evaluate(
             tls_client_key,
             tls_client_passwd,
             enable_serving_output,
+            input_questions,
+            output_file_formats,
+            system_prompt,
+            temperature,
+            model_name,
+            judge_model_name,
         )
     except Exception as e:
         logger.error(f"An error occurred during evaluation: {str(e)}")

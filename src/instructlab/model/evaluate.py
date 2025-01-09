@@ -27,6 +27,7 @@ class Benchmark(str, enum.Enum):
     MMLU_BRANCH = "mmlu_branch"
     MT_BENCH = "mt_bench"
     MT_BENCH_BRANCH = "mt_bench_branch"
+    DK_BENCH = "dk_bench"
 
 
 def evaluate_model(
@@ -52,6 +53,12 @@ def evaluate_model(
     tls_client_key,  # pylint: disable=unused-argument
     tls_client_passwd,  # pylint: disable=unused-argument
     enable_serving_output,
+    input_questions,
+    output_file_formats,
+    system_prompt,
+    temperature,
+    model_name,
+    judge_model_name,
 ):
     """Evaluates a trained model"""
 
@@ -79,7 +86,45 @@ def evaluate_model(
             few_shots,
             batch_size,
             tasks_dir,
+            input_questions,
         )
+
+        if benchmark == Benchmark.DK_BENCH:
+            # First Party
+            from instructlab.model.dk_bench_utils import (
+                make_run_dir,
+                print_results,
+                run_dk_bench,
+                validate_output_file_formats,
+                write_results,
+            )
+
+            # turn output_file_formats into a list to be passed into write_results
+            file_formats = output_file_formats.split(",")
+            validate_output_file_formats(file_formats)
+
+            result, model_name = run_dk_bench(
+                ctx,
+                model,
+                model_name,
+                max_workers,
+                gpus,
+                backend,
+                enable_serving_output,
+                input_questions,
+                system_prompt,
+                temperature,
+                judge_model_name,
+            )
+
+            # default for output_dir is set by Click in src/instructlab/cli/model/evaluate.py
+            # it is a string not a pathlib.Path
+            output_dir = make_run_dir(output_dir)
+            files = write_results(result, file_formats, output_dir, model_name)
+            print_results(result, files, model_name)
+
+            print("\n")
+            logger.info("ᕦ(òᴗóˇ)ᕤ Model evaluate with DK-Bench completed! ᕦ(òᴗóˇ)ᕤ")
 
         if benchmark == Benchmark.MT_BENCH:
             # Third Party
@@ -452,6 +497,7 @@ def validate_options(
     few_shots,
     batch_size,
     tasks_dir,
+    input_questions,
 ):
     """takes in arguments from the CLI and uses 'benchmark' to validate other arguments
     if all needed configuration is present, raises an exception for the missing values
@@ -515,6 +561,14 @@ def validate_options(
         validate_model(model, allow_gguf=False)
         if benchmark == Benchmark.MMLU_BRANCH:
             validate_model(base_model, "--base-model", allow_gguf=False)
+
+    if benchmark == Benchmark.DK_BENCH:
+        required_args = [input_questions]
+        if None in required_args:
+            required_arg_names = ["input-questions"]
+            error_message = f"Benchmark {benchmark} requires the following args to be set: {required_arg_names}"
+            logger.error(f"\033[91m{error_message}\033[0m")
+            raise ValueError(error_message)
 
 
 def validate_model(model: str, model_arg: str = "--model", allow_gguf: bool = True):
