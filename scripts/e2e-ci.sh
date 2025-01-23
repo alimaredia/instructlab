@@ -77,6 +77,11 @@ init_e2e_tests() {
 
     E2E_LOG_DIR="${HOME}/log"
     mkdir -p "${E2E_LOG_DIR}"
+
+    if [ -z "${OPENAI_API_KEY}" ]; then
+        echo "WARNING: OPENAI_API_KEY not set, DK-Bench will not run. To skip running DK-Bench in this script run: export OPENAI_API_KEY='NO_API_KEY'"
+        exit 1
+    fi
 }
 
 step() {
@@ -377,6 +382,24 @@ test_evaluate() {
 
     model_path=${TRAINED_MODEL_PATH}
     base_model_path="${CACHE_HOME}/instructlab/models/${GRANITE_7B_MODEL}"
+
+    if [ "${OPENAI_API_KEY}" = "NO_API_KEY" ]; then
+	echo "WARNING: OPENAI_API_KEY not set to a valid key. Skipping DK-Bench..."
+    else
+      step Running DK Bench
+      dk_bench_output_formats="csv,xlsx,jsonl"
+      step Running DK Bench where trained model generates responses
+      ilab model evaluate \
+          --model "${model_path}" \
+          --benchmark dk_bench \
+          --input-questions "${SCRIPTDIR}/test-data/dk-bench-questions.jsonl" \
+          --output-file-formats "${dk_bench_output_formats}"
+
+      step Running DK Bench with responses already provided
+      ilab model evaluate \
+          --benchmark dk_bench \
+          --input-questions "${SCRIPTDIR}/test-data/dk-bench-questions-with-responses.jsonl" \
+    fi
 
     export INSTRUCTLAB_EVAL_MMLU_MIN_TASKS=true
     export HF_DATASETS_TRUST_REMOTE_CODE=true
