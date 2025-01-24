@@ -199,7 +199,7 @@ def set_benchmark_specific_vars(
 )
 @click.option(
     "--temperature",
-    type=click.FLOAT,
+    type=click.FloatRange(min=0.0, max=1.0),
     cls=clickext.ConfigOption,
 )
 @click.pass_context

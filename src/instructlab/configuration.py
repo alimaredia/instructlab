@@ -529,6 +529,8 @@ class _evaluate(BaseModel):
     )
     temperature: float = Field(
         default=0.0,
+        ge=0.0,
+        le=1.0,
         description="Temperature for model getting responses during DK-Bench. Temperature controls the randomness of the model's responses. Lower values make the output more deterministic, while higher values produce more random results.",
     )
 
